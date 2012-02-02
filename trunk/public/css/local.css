@@ -1,0 +1,175 @@
+/*-----Devotee List------*/
+#page-title{
+    color: #1C2A47;
+    font-size:24px;
+    text-align:center;
+    margin-top:10px;margin-bottom:10px;
+    background:#D0D7E6;
+    line-height:40px;
+    -khtml-border-radius-topleft: 10px;
+    -khtml-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.itemList{
+    width:550px ;
+    border:1px solid #ECECEC ;
+    float: left;
+}
+.panel{
+    border:1px solid #ECECEC ;
+    float: left;
+    width:223px ;
+    border-left:none ;
+    padding:6px;
+}
+.itemRow{
+    padding-top:4px;
+    padding-bottom:4px;
+}
+.itemRow .pic, .details,.contact{
+    float:left;
+    padding:6px;
+    position:relative;
+}
+.itemRow .pic{width:60px;}
+.itemRow .details{width:240px;}
+.itemRow .contact{width:210px;}
+.itemRow .pic img {
+    width:60px;
+    height:80px;
+}
+.itemRow .details .searchname{
+    color:#000080;
+    font-size:16px;
+    margin-bottom:4px;
+    border-bottom:#D3D3D3 1px solid;
+}
+.bg1{background:transparent;}
+.bg2{background:#F6F6F6;}
+.dataItem{color:#12C;color:#E98C38;color: #000080;}
+.panelHead{
+    color: #1C2A47;
+    text-align:center;
+    margin-top:10px;
+    background:#D0D7E6;
+    line-height:26px;
+    -khtml-border-radius-topleft: 10px;
+    -khtml-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.panelHead h1{
+    font-size:16px;
+}
+.panelContent{
+    background:#F6F6F6;
+    padding:4px;
+    padding-bottom:10px;
+    margin-bottom:20px ;
+}
+.checkedList{
+    padding:4px;
+}
+.topcorner{
+    top:0;right:0;position:absolute;
+}
+.linkAction a,.linkAction a:visited{
+    color: blue;
+}
+.linkAction a:hover,.linkAction a:active {
+    text-decoration: underline;
+    color: red;
+}
+/*-------------YUI3 Panel Modal-----------*/
+.yui3-skin-sam .yui3-widget-mask {
+    background-color: black !important;
+    zoom: 1;
+    -ms-filter: "alpha(opacity=20)" !important;
+    filter: alpha(opacity=20) !important;
+    opacity: .2 !important;
+}
+.yui3-skin-sam .yui3-panel .yui3-panel-content {
+    -webkit-box-shadow: 0 4px 40px rgba(0,0,0,0.7);
+    -moz-box-shadow: 0 4px 40px rgba(0,0,0,0.7);
+    box-shadow: 0 4px 40px rgba(0,0,0,0.7);
+    -webkit-outline: 0;
+    border: solid 1px #ACACAC;
+    border: solid 1px #868686;
+    border-bottom-color: #999;
+    background: white;
+    outline: 0;
+    padding: 0px 40px;
+    border-image: initial;
+}
+/*-------------YUI3 Tabview-----------*/
+.yui3-tabview .yui3-tabview-content .yui3-tabview-panel {
+    background: #fff;
+    border: 1px solid #D0D7E6;
+}	
+.yui3-skin-sam .yui3-tab-label{
+    background: #D0D7E6;
+    -khtml-border-radius-topleft: 10px;
+    -khtml-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/*-------------Filter Box-----------*/
+.filterBox{
+}
+.filterBox .chkList{
+    border: 1px solid #ECECEC;
+    height:198px;
+    overflow: auto;
+}
+.filterBox h2,.fboxChk h2{
+    font: normal 16px arial,sans-serif;
+}
+.filterBox h1{
+    font: normal 24px arial,sans-serif bold;
+    top:20px;
+    margin-bottom: 12px;
+}
+.filterBox textarea{
+    height:20px;
+    width: 790px;
+}
+.fboxChk{
+    float: left;
+    width:199px;
+    margin-top: 10px;
+}
+/* tab rows */
+.tabRowItems{
+    padding: 4px;
+    padding-left: 10px;
+    padding-right:10px;
+}
+/*--Editing user reources--*/
+.scrolDivBox{
+    border:1px solid #ECECEC ;
+    position: relative;
+    margin-top:6px;
+}
+.scrolDivBox .scrolDivHeader{
+    background: #D0D7E6;padding:6px 10px;
+}
+.scrolDivBox .scrolDivHeader h2{
+    display:inline;
+}
+.scrolDivBox .scrolDivList{
+    overflow: auto;
+}

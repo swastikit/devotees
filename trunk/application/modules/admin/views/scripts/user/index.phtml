@@ -1,0 +1,344 @@
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('css/local.css') ?>" />
+<script>
+(function(){
+	YUI().use('panel', function(Y){
+		pleaseWait={
+			show:function(){
+				panel.set("centered",true);
+				panel.show();
+			},
+			hide:function(){
+				panel.hide();
+			}
+		};
+        bodyContent = '<div>Please wait...</div>';
+	    var panel = new Y.Panel({
+	        bodyContent: bodyContent,
+	        width: 400,
+	        centered: true,
+	        zIndex: 999,
+	        modal: true,
+		    hideOn: [],
+		    focusOn:[],
+		    buttons:[]	        
+	    });
+	    panel.render();
+	    panel.show();
+		Y.on("domready", function () {
+			panel.hide();
+		});
+	});
+})();
+var counselorList=<?php echo($this->jsonCounselor);?>;
+</script>
+<div id="page-title" class="clearfix">List Of Users</div>
+<div class="itemList">
+<?php if(count($this->userList)): ?>
+    <div class="clearfix"></div>
+    <div id="pagination" align="center" class="pagination">
+        <?php echo $this->paginationControl($this->paginator, 'Sliding','viewscripts/paginator.phtml');?>
+    </div>
+    <div class="itemRow" style="height:30px;">
+        <div class="pic">
+        </div>
+        <div class="details">
+            <b>Personal Info</b>
+        </div>
+        <div class="contact" >
+            <b>Account Info</b>
+        </div>
+    </div>
+    <?php $c=0;foreach ($this->userList as $u): ?>
+        <div class="clearfix"></div>
+        <div class="itemRow clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>">
+            <div class="pic">
+                <a href="<?php echo $this->baseUrl('admin/user/view?id=') . $this->escape($u['id']); ?>" target="_blank">
+                    <img src="/photos/thumbs/<?php echo $this->escape($u['pics']);?>"/>
+                </a>
+            </div>
+            <div class="details" >
+                <div class="searchname"><?php echo $this->escape($u['search_name']);?></div>
+                <div>Counserlor :<label class="dataItem"> <?php echo $this->escape($u['counselorname']);?></label></div>
+                <div>Center :<label class="dataItem"> <?php echo $this->escape($u['centername']);?></label></div>
+                <div>Email :<label class="dataItem"> <?php echo $this->escape($u['email']);?></label></div>
+                <div>Mobile :<label class="dataItem"> <?php echo $this->escape($u['mobile']);?></label></div>
+            </div>
+            <div class="contact">
+                <div>Role :<label class="dataItem"> <?php echo $this->escape($u['role']);?></label></div>
+                <div>User Id :<label class="dataItem"> <?php echo $this->escape($u['login']);?></label></div>
+                <div>Created By :<label class="dataItem"> <?php echo $this->escape($u['ownername']);?></label></div>
+                <div>Active :<label class="dataItem"> <?php $status=$u['is_active']; if($status=='Y') $status='YES'; else $status='No'; echo $status;?></label></div>
+                <div>Blocked :<label class="dataItem"> <?php $status=$u['is_blocked']; if($status=='Y') $status='YES'; else $status='No'; echo $status;?></label></div>
+                <div>Temporary :<label class="dataItem"> <?php $status=$u['is_temporary_pwd']; if($status=='Y') $status='YES'; else $status='No'; echo $status;?></label></div>
+                <div class="linkAction topcorner"><a href="<?php echo $this->baseUrl('admin/user/view?id=') . $this->escape($u['id']); ?>" target="_blank">Edit</a></div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <div class="clearfix"></div>
+    <div id="pagination" align="center" class="pagination">
+        <?php echo $this->paginationControl($this->paginator, 'Sliding', 'viewscripts/paginator.phtml');?>
+    </div>
+<?php else: ?>
+<?php echo 'No Record Found or Code is not complete';?>
+<?php endif; ?>
+</div>
+<div class="panel">
+    <div>
+        <div class="panelHead">
+            <h1>Search</h1>
+        </div>
+        <div class="panelContent">
+            Search By :
+             <br /><?php echo $this->formSelect('selSearchBy', $this->selSearchBy, null, $this->searchOptions) ?>
+            <br /><input type="text" placeholder='SEARCH'/>
+            <br /><button>Search</button>
+        </div>
+        
+    </div>    
+    <div class="panelHead">
+        <h1>Filter</h1>
+    </div>
+    <div class="panelContent" style="height:100px;">
+        <span class="linkAction"><a href="javascript:void(0);" onclick="RG.showFilterPanel();">Set Filter</a>&nbsp;&nbsp;&nbsp;<a href="">Clear Filter</a></span>
+    </div>
+    <div class="panelHead">
+        <h1>Actions</h1>
+    </div>
+    <div class="panelContent" style="height:100px;">
+        <span class="linkAction">
+            <ul>
+                <li><a href="">Delete selected devotees</a></li>
+                <li><a href="">Download the profile of selected devotees</a></li>
+                <li><a href="">Export the list to excel</a></li>
+            </ul>
+        </span>
+    </div>
+    <div class="panelHead">
+        <h1>Groups</h1>
+    </div>
+    <div class="checkedList" style="height:100px;">
+    fdsa
+    </div>
+</div>
+<div class="clearfix"></div>
+<div id="userPanelContent" style="display: none;">
+    <div style="width:800px;height:600px;">
+        <a href="javascript:void(0);" onclick="USER.hidePanel()" style="float:right;">X</a>
+        <div class="clearfix"></div>
+        <div class="filterBox">
+            <h1>USER</h1>
+        </div>
+        <div class="filterBox">
+            <h2>Counserlor:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Mentor:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Spiritual Master:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Center:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Country:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Language Known:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="fboxChk">
+            <h2>Ashram Status:</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterAsram', $this->selAsramIds, null, $this->asram, '<br/>');?>
+        </div>
+        <div class="fboxChk">
+            <h2>Blood Group:</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterBloodGroup', $this->selBloodGroup, null, $this->bloodGroup, '<br/>');?>
+        </div>
+        <div class="fboxChk">
+            <h2>Initiation Status</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterInitStatus', $this->selInitStatusIds, null, $this->initStatus, '<br/>');?>
+        </div>
+        <div class="fboxChk">
+            <h2>Status:</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterStatus', $this->selStatusIds, null, $this->status, '<br/>');?>
+        </div>
+        <div class="clearfix"></div>
+        <div style="text-align:center;">
+            <button>Search</button>&nbsp;<button onclick="USER.hidePanel();">Close</button>
+        </div>
+    </div>
+</div>
+<script>
+(function(){
+	YUI().use('datasource-local','panel','autocomplete', function(Y){
+		USER={
+			showPanel:function(){
+				p.set("centered",true);
+				p.show();
+			},
+			hidePanel:function(){
+				p.hide();
+			}
+		};
+        var fpContent = Y.one('#userPanelContent').get('innerHTML');
+        Y.one('#userPanelContent').set('innerHTML','');
+	    var p = new Y.Panel({
+            bodyContent : fpContent,
+	        centered: true,
+	        zIndex: 999,
+	        modal: true,
+            render: true,
+            visible: false,
+		    hideOn: [],
+		    focusOn:[],
+		    buttons:[],	        
+            plugins:[Y.Plugin.Drag]
+	    });
+        ds = new Y.DataSource.Local({source:counselorList});
+        //-----Make Counselor Autocomplete------
+		Y.one('#acConselorFilter').plug(Y.Plugin.AutoComplete, {
+			activateFirstItem: true,minQueryLength:1,maxResults:20,allowTrailingDelimiter: true,queryDelay: 0,queryDelimiter: ',',            
+            resultFilters:[
+                function(query, results) {
+                    query = query.toLowerCase();
+                    return Y.Array.filter(results, function (result) {
+                        var r=result.text.toLowerCase().replace(/[^a-zA-Z 0-9]+/g,'');
+                        return r.indexOf(query) !== -1;
+                    });
+                },
+                function (query, results) {
+                    var selected = Y.one('#acConselorFilter').get('value').split(/\s*,\s*/);
+                    selected = Y.Array.hash(selected);
+                    return Y.Array.filter(results, function (result) {
+                        return !selected.hasOwnProperty(result.text);
+                    });
+                }
+            ],
+		   	//resultListLocator: 'result', //--For remote
+            resultListLocator: function (response) {
+                return response[0].result;
+            },
+		   	resultTextLocator: 'name',
+		   	source:ds,
+            //source:'/devotees/listlabelvaluecounselor?s={query}',//-for remote
+		});//--End of Ac
+	});
+})();
+</script>
+<div class="clearfix"></div>
+<div id="filterPanelContent" style="display: none;">
+    <div style="width:800px;height:600px;">
+        <a href="javascript:void(0);" onclick="RG.hideFilterPanel()" style="float:right;">X</a>
+        <div class="clearfix"></div>
+        <div class="filterBox">
+            <h1>Filter</h1>
+        </div>
+        <div class="filterBox">
+            <h2>Counserlor:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Mentor:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Spiritual Master:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Center:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Country:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="filterBox">
+            <h2>Language Known:</h2>
+            <textarea id="acConselorFilter"></textarea>
+        </div>
+        <div class="fboxChk">
+            <h2>Ashram Status:</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterAsram', $this->selAsramIds, null, $this->asram, '<br/>');?>
+        </div>
+        <div class="fboxChk">
+            <h2>Blood Group:</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterBloodGroup', $this->selBloodGroup, null, $this->bloodGroup, '<br/>');?>
+        </div>
+        <div class="fboxChk">
+            <h2>Initiation Status</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterInitStatus', $this->selInitStatusIds, null, $this->initStatus, '<br/>');?>
+        </div>
+        <div class="fboxChk">
+            <h2>Status:</h2>
+            <?php echo $this->formMultiCheckbox('chkFilterStatus', $this->selStatusIds, null, $this->status, '<br/>');?>
+        </div>
+        <div class="clearfix"></div>
+        <div style="text-align:center;">
+            <button>Search</button>&nbsp;<button onclick="RG.hideFilterPanel();">Close</button>
+        </div>
+    </div>
+</div>
+<script>
+(function(){
+	YUI().use('datasource-local','panel','autocomplete','datasource', function(Y){
+		RG={
+			showFilterPanel:function(){
+				fp.set("centered",true);
+				fp.show();
+			},
+			hideFilterPanel:function(){
+				fp.hide();
+			}
+		};
+        var fpContent = Y.one('#filterPanelContent').get('innerHTML');
+        Y.one('#filterPanelContent').set('innerHTML','');
+	    var fp = new Y.Panel({
+            bodyContent : fpContent,
+	        centered: true,
+	        zIndex: 999,
+	        modal: true,
+            render: true,
+            visible: false,
+		    hideOn: [],
+		    focusOn:[],
+		    buttons:[],	        
+            plugins:[Y.Plugin.Drag]
+	    });
+        ds = new Y.DataSource.Local({source:counselorList});
+        //-----Make Counselor Autocomplete------
+		Y.one('#acConselorFilter').plug(Y.Plugin.AutoComplete, {
+			activateFirstItem: true,minQueryLength:1,maxResults:20,allowTrailingDelimiter: true,queryDelay: 0,queryDelimiter: ',',            
+            resultFilters:[
+                function(query, results) {
+                    query = query.toLowerCase();
+                    return Y.Array.filter(results, function (result) {
+                        var r=result.text.toLowerCase().replace(/[^a-zA-Z 0-9]+/g,'');
+                        return r.indexOf(query) !== -1;
+                    });
+                },
+                function (query, results) {
+                    var selected = Y.one('#acConselorFilter').get('value').split(/\s*,\s*/);
+                    selected = Y.Array.hash(selected);
+                    return Y.Array.filter(results, function (result) {
+                        return !selected.hasOwnProperty(result.text);
+                    });
+                }
+            ],
+		   	//resultListLocator: 'result', //--For remote
+            resultListLocator: function (response) {
+                return response[0].result;
+            },
+		   	resultTextLocator: 'name',
+		   	source:ds,
+            //source:'/devotees/listlabelvaluecounselor?s={query}',//-for remote
+		});//--End of Ac
+	});
+})();
+</script>

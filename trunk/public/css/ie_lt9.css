@@ -1,0 +1,8 @@
+.yui3-skin-sam .yui3-panel .yui3-panel-content {
+    filter:
+    progid:DXImageTransform.Microsoft.Shadow(color='#868686',direction='120',strength='20');
+    border: solid 1px #868686;
+    border-bottom-color: #999;
+    background: white;
+}
+

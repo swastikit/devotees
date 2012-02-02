@@ -1,0 +1,247 @@
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('css/local.css') ?>" />
+<script>
+(function(){
+	YUI().use('panel', function(Y){
+		pleaseWait={
+			show:function(){
+				panel.set("centered",true);
+				panel.show();
+			},
+			hide:function(){
+				panel.hide();
+			}
+		};
+        bodyContent = '<div>Please wait...</div>';
+	    var panel = new Y.Panel({
+	        bodyContent: bodyContent,
+	        width: 400,
+	        centered: true,
+	        zIndex: 999,
+	        modal: false,
+		    hideOn: [],
+		    focusOn:[],
+		    buttons:[]	        
+	    });
+	    panel.render();
+	    panel.show();
+		Y.on("domready", function () {
+			panel.hide();
+		});
+	});
+})();
+</script>
+<div id="page-title" class="clearfix">User Profile</div>
+<style>
+.col,.lstInTbVw,.contInTbVw{
+    position: relative;
+}
+.col{
+    float:left;
+}
+.contInTbVw h2{
+    display: inline;
+}
+
+dl.table-display
+{
+	float: left;
+	width: 520px;
+	margin: .5em;
+	padding: 0;
+}
+.table-display dt
+{
+	clear: left;
+	float: left;
+	width: 150px;
+	margin: 0;
+	padding: 5px;
+	font-weight: bold;
+}
+.table-display dd
+{
+	float: left;
+	margin: 0;
+	padding: 5px;
+}
+.picFull{
+    float:left;
+    margin: .5em;
+    position:relative;
+    padding: 0;
+}
+.picFull img {
+    width:120px;
+    height:160px;
+}
+</style>
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('css/ie_lt9.css') ?>" />
+<![endif]-->
+<div>
+    <div id="divMsg" class="msg"></div>
+    <div id="tbBasicInfo"><?php include 'viewbasic.ajax.phtml' ?></div>
+    <div id="tabMain"></div>
+    <div id="tbDbx" style="display: none;"><?php include 'viewdbs.ajax.phtml' ?></div>
+    <div id="tbCentersx" style="display: none;"><?php include 'viewcenters.ajax.phtml' ?></div>
+    <div id="tbCounselorsx" style="display: none;"><?php include 'viewcounselors.ajax.phtml' ?></div>
+    <div id="tbMentorsx" style="display: none;"><?php include 'viewmentors.ajax.phtml' ?></div>
+    <div id="tbGurusx" style="display: none;"><?php include 'viewgurus.ajax.phtml' ?></div>
+    <div id="tbActionsx" style="display: none;"><?php include 'viewaccesses.ajax.phtml' ?></div>
+    <div id="tbDevoteex" style="display: none;"><?php include 'viewdevotee.ajax.phtml' ?></div>
+</div>
+<div class="clearfix"></div>
+<div id="popUpHid" style="display: none;">
+    <div>
+        <a href="javascript:void(0);" onclick="RG.hidePopUp()" style="float:right;">X</a>
+        <div class="clearfix"></div>
+        <div id='popUpContent'></div>
+    </div>
+</div>
+<div id="error"></div>
+
+<script>
+	(function(){
+		YUI().use('json-parse', 'json-stringify', 'node','panel','tabview','node','anim-base','anim-xy','io-base','io-form','cookie','overlay',function(Y) {
+    	  	RG = {
+    			showPopUp:function(){
+    				p.set("centered",true);
+    				p.show();
+    			},
+    			editUserBasic:function(id){
+                    var htm="<div style='height:200%;font-size:20px;'>LOADING... PLEAE WAIT..</div>";
+                    Y.one('#popUpContent').set('innerHTML',htm);		        			        	
+                    p.set("centered",true);
+                    p.show();
+                    var cfg = {
+                        method: 'POST',
+                        data:'id=' + id
+                    };
+                    var sUrl = "/admin/user/editbasic/do/editbasic";
+                    pleaseWait.show();
+                    var request = Y.io(sUrl, cfg);
+    			},
+    			saveUserBasic:function(){
+                    var cfg = {
+                        method: 'POST',
+   						form:{
+   					         id:'edituserbasic',
+   					         useDisabled:true
+   					    }
+                    };
+                    var sUrl = "/admin/user/editbasic/do/savebasic";
+                    pleaseWait.show();
+                    var request = Y.io(sUrl, cfg);
+    			},
+    			editMoreInfo:function(id,info){
+                    var htm="<div style='height:200%;font-size:20px;'>LOADING... PLEAE WAIT..</div>";
+                    Y.one('#popUpContent').set('innerHTML',htm);		        			        	
+                    p.set("centered",true);
+                    p.show();
+                    var cfg = {
+                        method: 'POST',
+                        data:'id=' + id + '&info=' + info
+                    };
+                    var sUrl = "/admin/user/editmoreinfo";
+                    pleaseWait.show();
+                    var request = Y.io(sUrl, cfg);
+    			},
+    			hidePopUp:function(){
+    				p.hide();
+    			}
+                
+    	  	};
+            //-----------------End of RG------------------
+            var pContent = Y.one('#popUpHid').get('innerHTML');
+            Y.one('#popUpHid').set('innerHTML','');
+    	    var p = new Y.Panel({
+                bodyContent : pContent,
+    	        centered: true,
+    	        zIndex: 999,
+    	        modal: true,
+                render: true,
+                visible: false,
+    		    hideOn: [],
+    		    focusOn:[],
+    		    buttons:[],	        
+                plugins:[Y.Plugin.Drag]
+    	    });
+            var tbDbx=Y.one('#tbDbx').get('innerHTML');
+            var tbCentersx=Y.one('#tbCentersx').get('innerHTML');
+            var tbCounselorsx=Y.one('#tbCounselorsx').get('innerHTML');
+            var tbMentorsx=Y.one('#tbMentorsx').get('innerHTML');
+            var tbGurusx=Y.one('#tbGurusx').get('innerHTML');
+            var tbActionsx=Y.one('#tbActionsx').get('innerHTML');
+            var tbDevoteex=Y.one('#tbDevoteex').get('innerHTML');
+    		var tabview = new Y.TabView({
+    	        children: [{            
+    	            label: 'Databases',
+    	            content: '<div id="tbDb" style="height:100%;">' + tbDbx + '</div>'
+    	        }, {
+    	            label: 'Actions',
+    	            content: '<div id="tbActions" style="height:100%;">' + tbActionsx + '</div>'
+    	        }, {
+    	            label: 'Centers',
+    	            content: '<div id="tbCenters" style="height:100%;">' + tbCentersx + '</div>'
+    	        }, {
+    	            label: 'Counselors',
+    	            content: '<div id="tbCounselors" style="height:100%;">' + tbCounselorsx + '</div>'
+    	        }, {
+    	            label: 'Mentors',
+    	            content: '<div id="tbMentors" style="height:100%;">' + tbMentorsx + '</div>'
+    	        }, {
+    	            label: 'Spiritual Masters',
+    	            content: '<div id="tbGurus" style="height:100%;">' + tbGurusx + '</div>'
+    	        }, {
+    	            label: 'Devotees',
+    	            content: '<div id="tbDevoteex" style="height:100%;">' + tbDevoteex + '</div>'
+                }],
+                /*
+    	        on:{
+    				selectionChange:function(e){
+    					e.newVal.get('panelNode').set('innerHTML',"<label style='color:red;line-height:40px;'>Loading... </label>");
+    					e.newVal.get('panelNode').toggleClass(e.newVal.getClassName('loading'),true);
+    					//tabview.item(3).get('label')
+    					RG.refreshTab(e.newVal.get('label'),tabview.indexOf(e.newVal));
+    				}
+    			}*/
+    	    });
+    	    tabview.render('#tabMain');
+            var handleFailure = function(ioId, o){
+            	pleaseWait.hide();
+            	if(o.responseText !== undefined){
+            		var s = "Server Problem";
+            		s += "\nTransaction id: " + ioId;
+            		s += "\nHTTP status: " + o.status;
+            		s += "\nStatus code message: " + o.statusText;
+            		s += "\nResponseText: " + o.responseText;
+            		alert(s);
+                    Y.one('#error').set('innerHTML',s);
+            	}
+            };
+            var handleSuccess = function(ioId, o){
+                pleaseWait.hide();
+                if(o.responseText !== undefined){
+                    var res=eval( '(' + o.responseText + ')');
+                    if(res.htmlBody!== undefined && res.htmlBody!= ''){
+                        Y.one('#popUpContent').set('innerHTML',res.htmlBody);
+                        p.set("centered",true);
+                        responseDiv = document.getElementById('popUpContent');
+                        scripts = responseDiv.getElementsByTagName('script');
+                        eval(scripts[0].innerHTML);
+                    }
+                    
+                    if(res.message!== undefined && res.message!= ''){
+                        Y.one('#divMsg').set('innerHTML',res.message);
+                    }
+                    //Y.one('#error').set('innerHTML',res.htmlBodyBg);
+                    if(res.htmlBodyBg!== undefined && res.htmlBodyBg!= ''){
+                        Y.one('#tbBasicInfo').set('innerHTML',res.htmlBodyBg);
+                    }
+                }
+            }
+            Y.on('io:success', handleSuccess);
+            Y.on('io:failure', handleFailure);
+    	})
+    })();
+</script>

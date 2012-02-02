@@ -1,0 +1,63 @@
+<h1>Edit User</h1>
+<div id="divMsg" class="msg"></div>
+<?php $form = $this->form;?>
+<form id="<?php echo $form->getAttrib('id')?>" name="<?php echo $form->getName()?>" method="<?php echo $form->getMethod()?>" action="<?php echo $form->getAction()?>">
+    <?php echo $form->id->renderViewHelper();?>
+    <div>
+        <dl class="table-display">
+        	<dt>Name</dt>
+        	<dd>: <?php echo $this->escape($this->u['search_name']);?></dd>
+        	<dt>User Id</dt>
+        	<dd>: <?php echo $form->userId->renderViewHelper(); echo (($form->userId->hasErrors())?'<dd>' . $form->userId->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Role</dt>
+        	<dd>: <?php echo $form->role->renderViewHelper(); echo (($form->role->hasErrors())?'<dd>' . $form->role->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Email</dt>
+        	<dd>: <?php echo $form->email->renderViewHelper(); echo (($form->email->hasErrors())?'<dd>' . $form->email->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Country</dt>
+        	<dd>: <?php echo $form->country->renderViewHelper(); echo (($form->country->hasErrors())?'<dd>' . $form->country->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Mobile</dt>
+        	<dd>: <?php echo $form->mobile->renderViewHelper(); echo (($form->mobile->hasErrors())?'<dd>' . $form->mobile->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Acitve</dt>
+        	<dd>: <?php echo $form->active->renderViewHelper(); echo (($form->active->hasErrors())?'<dd>' . $form->active->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Temporary Password</dt>
+        	<dd>: <?php echo $form->temporaryPwd->renderViewHelper(); echo (($form->temporaryPwd->hasErrors())?'<dd>' . $form->temporaryPwd->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Blocked</dt>
+        	<dd>: <?php echo $form->blocked->renderViewHelper(); echo (($form->blocked->hasErrors())?'<dd>' . $form->blocked->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Reason for blocking</dt>
+        	<dd>: <?php echo $form->blockedReason->renderViewHelper(); echo (($form->blockedReason->hasErrors())?'<dd>' . $form->blockedReason->renderErrors() .'</dd>' :'');?></dd>
+        	<dt>Remarks</dt>
+        	<dd>: <?php echo $form->remarks->renderViewHelper(); echo (($form->remarks->hasErrors())?'<dd>' . $form->remarks->renderErrors() .'</dd>' :'');?></dd>
+        </dl>
+    </div>
+    <div class="clearfix"></div>
+    <div style="text-align:right;">
+        <input type="button" onclick="RG.saveUserBasic();" value="Save"/>&nbsp;<input type="button" onclick="RG.hidePopUp();" value="Close"/>
+    </div>
+</form>
+<div class="clearfix"></div>
+<script>
+	(function(){
+		YUI().use('io-base','io-form',function(Y) {
+    	  	BASIC = {
+    	  	};
+            //-----------------End of BASIC------------------
+            var handleFailure = function(ioId, o){
+            	pleaseWait.hide();
+            	if(o.responseText !== undefined){
+            		var s = "Server Problem";
+            		s += "\nTransaction id: " + ioId;
+            		s += "\nHTTP status: " + o.status;
+            		s += "\nStatus code message: " + o.statusText;
+            		s += "\nResponseText: " + o.responseText;
+            		alert(s);
+                    Y.one('#error').set('innerHTML',s);
+            	}
+            };
+            var handleSuccess = function(ioId, o){
+                //Y.one('#error').set('innerHTML',o.responseText);
+            }
+            Y.on('io:success', handleSuccess);
+            Y.on('io:failure', handleFailure);
+    	})
+    })();
+</script>

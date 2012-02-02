@@ -1,0 +1,39 @@
+<?php
+echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head> 
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title><?php echo $this->escape($this->title); ?></title>
+		<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('css/basic.css') ?>" />
+		<script type="text/javascript" src="<?php echo $this->baseUrl('js/yui_3_4_1_starter.js') ?>" charset="utf-8"></script>
+		<script type="text/javascript" src="<?php echo $this->baseUrl('yui/yui_3.4.1/build/yui/yui-min.js') ?>"></script>
+		<script type="text/javascript" src="<?php echo $this->baseUrl('js/common.js') ?>" charset="utf-8"></script>
+	</head>
+	<body class="yui3-skin-sam">
+        <!-- Page Wrapper -->
+        <div id="page-wrapper">
+            <div id="page-header" class="clearfix">
+                <div id="page-header-content" class="center" >
+                    <div class="site-logo">
+                        <a><img src="/css/imgs/logo_rg.jpg" /></a> 
+                    </div>
+                    <span class="site-name"><a href=""><h1>Sri Sri Radha Gopinath Mandir</h1></a></span>
+                    <div class="site-slogan">Congregation Devotee Database</div> 
+                    <div id="main-menu">
+                        <?php
+    $this->navigation()->menu()->setPartial(array('top_nav.phtml', 'default'));
+    echo $this->navigation()->menu()->render();
+    ?>
+                    </div> <!-- /#main-menu -->
+                </div>
+            </div>
+            <div id="page-body" class="clearfix">
+                <div id="page-content" class="center clearfix">
+                    <div id="page-content-inside"><?php echo $this->layout()->content; ?></div>
+                </div>
+            </div>
+        </div>
+        <!-- Page Wrapper ends -->
+        <div id="page-footer" style="text-align:center;"><div id="page-footer-content">All Content &copy; Copyright 2011 Sri Sri Radha Gopinath Mandir</div></div>
+	</body>
+</html>
