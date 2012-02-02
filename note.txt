@@ -1,0 +1,96 @@
+Input Validation
+----------------
+1. Conduct data validation using a centralized input validation routine on a trusted system 
+(e.g., the server), even if already validated on the client side.
+2. Utilize a ‘whitelist’ of expected known good input parameters to limit input to
+allowed values and types. Validate data from “untrusted” sources and reject data that
+fails validation.
+3. Specify proper UTF-based character sets for sources of input and validate after
+proper decoding is completed.
+4. Perform input validation at all interfaces within the application to protect the
+application even if a component is reused or moved elsewhere.
+5. If any potentially hazardous characters must be allowed as input, implement
+additional controls like output encoding, secure task specific APIs and accounting for the
+utilization of that data throughout the application, examples of common hazardous
+characters include: < > " ' % ( ) & + \ \' \"
+6. If a standard validation routine cannot address the following inputs, then they
+should be checked discretely:
+? Check for null bytes (%00);
+? Check for “escaped” characters;
+? Check for new line characters (%0d, %0a, \r, \n), and other non-visible
+characters; and
+? Check for “dot-dot-slash" (../ or..\) path alterations characters. In cases where
+UTF-8 extended character set encoding is supported, address alternate
+representation like: %c0%ae%c0%ae/ (Utilize canonicalization to address double
+encoding or other forms of obfuscation attacks).
+7. Validate input against the expected complete data schema, for example XML,
+JSON etc.
+8. Validate the following:
+? Client-provided data before processing, including parameters, URLs and HTTP
+header content (e.g. Cookie names and values). Include automated post backs
+from JavaScript, Flash or other embedded code.
+? Header values in both requests and responses to verify they contain only visible,
+acceptable ASCII characters.
+? Inputs based on the type of data, as well as context.
+    -If it is a date or numeric field, ensure entry format is clearly defined to avoid
+    ambiguities.
+    -For example, if the type of data will always be of type alphabetic, then validate
+    same.
+    -If the input data belongs to a definable list of values, then only allow those
+    values. For example, if the expected value is a grain, like “rice”, then a value
+    that is not a grain, such as “motorcycle”, should not be allowed.
+    
+?data rfromo redirects; data length; data range e.g. days between 1-31; months 1-
+12 etc and expected data types e.g. numeric or alphanumeric etc.
+
+Output Validation and Encoding
+----------------------------
+1. Conduct encoding using a standard routine for each type of outbound encoding
+on a trusted system (e.g., the server).
+2. To use dynamically-generated query strings or commands in spite of the risk,
+properly quote arguments and escape any special characters within those arguments.
+3. Contextually encode and sanitize output data that originated outside the
+application's ‘trust’ boundary.
+4. Encode characters unless they are known to be safe for the intended interpreter.
+5. Escape or filter characters that do not match against the whitelist (such as
+everything that is not alphanumeric or white space). If some special characters are still
+needed, such as white space, wrap each argument in quotes after the escaping/filtering
+step.
+6. For every web page that is generated, specify and use an UTF-based character
+encoding (e.g., UTF-8).
+7. For any data that will be output to another web page, especially any data that
+was received from external inputs, use appropriate encoding on non-alphanumeric
+characters.
+8. Validate to ensure that output data is as expected.
+
+Session Management
+------------------
+1. Set Session timeout = 10 minitues.
+2. Set Session storage = database.
+3. Do not use cookie to store userId etc.
+4. Flushout all the session in logout.
+5. If a session was already established before login, terminate any existing sessions and
+establish a new session.
+6. Set HTTP cookies with the HttpOnly attribute.
+7. Generate a new session identifier if the connection security changes from HTTP to
+HTTPS, as can occur during authentication.
+8. Supplement standard session management for sensitive server-side operations, like
+account management, by utilizing per-session strong random tokens or parameters.
+
+Access Control
+--------------
+1. Access controls must be programmed to deny access in the event of an error or
+failure.
+2. The application must deny access if it cannot access its security configuration
+information.
+3. If user privileges chang during a session log the user out and force reauthentication.
+4. If state data must be stored on the client, use encryption and integrity checking
+on the server side to detect any state tampering.
+5. Restrict access to ‘protected URLs’ to only authorized users.
+6. Enforce authorization controls on every request, including those made by server
+side scripts, "includes" and requests from client-side technologies like AJAX, Flash, etc.
+7. Passwords must be at least one day old before they can be changed as this will
+prevent attacks based on password re-use. This does not apply to temporary passwords
+which must be changed on the next use.
+
+

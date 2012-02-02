@@ -1,0 +1,17 @@
+<div class="clearfix"></div>
+<div class="contInTbVw">
+    <h2>Counselors</h2>
+    <span class="linkAction"><a href="javascript:void(0)" onclick="RG.editMoreInfo(<?php echo $this->escape($this->id);?>,'COUNSELORS');">Edit</a></span>
+    <div class="lstInTbVw">
+        <?php if(count($this->counselorList)): ?>
+        <ol>
+        <?php $c=0; foreach ($this->counselorList as $u): ?>
+            <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><?php echo "$c.  " . $this->escape($u['name']) . ' (' . $this->escape($u['center']) . ')' . ($u['isactive']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
+        <?php endforeach; ?>
+        </ol>
+        <?php else: ?>
+        <?php echo 'No counselor is assigned to this user.';?>
+        <?php endif; ?>
+    </div>
+</div>
+<div class="clearfix"></div>

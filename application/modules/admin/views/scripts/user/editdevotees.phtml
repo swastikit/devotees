@@ -1,0 +1,103 @@
+<div class="clearfix"></div>
+<h1>Devotees Assigned</h1>
+<div style="margin-bottom:30px;width:750px;">
+    <div id="popUpMessage" class="msg"></div>
+    <div class="scrolDivBox">
+        <div class="scrolDivHeader">
+            Add more devotees&nbsp;:&nbsp;<input name="seldevotee" id="seldevotee" type="text" style="width: 300px;"/>
+        </div>
+        <div class="scrolDivList" style="height:500px!important;">
+         <ul id="photos">
+            <li class="empty">No photos selected.</li>
+        </ul>
+            <?php if(count($this->list)): ?>
+            <ol id="olSel">
+            <?php $c=0; foreach ($this->list as $u): ?>
+                <?php if($u['checked']=='checked'): ?>
+                <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><?php echo "$c.  " . $this->escape($u['name']) . ($u['is_active']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
+                <?php endif;?>
+            <?php endforeach; ?>
+            </ol>
+            <?php else: ?>
+            <?php echo 'No devotee is assigned to this user.';?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div style="text-align:right;margin-top:6px;">
+        <input type="button" id="btnSavePopUp" value="Save"/>&nbsp;<input type="button" onclick="RG.hidePopUp();" value="Close"/>
+    </div>
+    <style>
+        .yui3-aclist-content{
+            width: 600px;
+        }
+        .yui3-aclist-item{
+            float: left;
+            display: inline;
+            width: 250px;
+        }
+    </style>
+</div>
+<div class="clearfix"></div>
+<script>
+YUI().use('autocomplete', 'autocomplete-highlighters', function (Y) {
+    var inputNode  = Y.one('#seldevotee');
+    var getImageUrl=function(result, size) {
+        if (!size) { size = 's'; }
+        return Y.Lang.sub(
+            'http://farm{farm}.static.flickr.com/{server}/{id}_{secret}_' + size + '.jpg',
+            result.raw
+        );
+    };
+    var surl = "/admin/user/devoteelist?s={query}&abc=1";
+    inputNode.plug(Y.Plugin.AutoComplete, {
+        maxResults: 10,
+        resultHighlighter: 'wordMatch',
+        resultTextLocator: 'name',
+        resultListLocator: 'result',
+        source:surl,
+        /*
+        requestTemplate: function () {
+            return '?s={query}&abc=1'; 
+        },
+        */
+        /*
+        resultFormatter: function (query, results) {
+            //alert(query);
+            return Y.Array.map(results, function (result) {
+                //alert(result.raw.id);
+                return '<div class="result">' +
+                    '<img class="photo" src="' + getImageUrl(result) + '" alt="thumbnail">' +
+                    '<span class="title">' + result.highlighted + '</span>' +
+                    '</div>';
+            })
+        }
+        */
+    });
+   
+    var photosNode = Y.one('#photos');
+    // After a photo is selected, add it to the collection.
+    inputNode.ac.on('select', function (e) {
+        var result = e.result;
+    
+        // Prevent the default select handler so we can provide our own selection
+        // behavior instead.
+        e.preventDefault();
+    
+        inputNode.select();
+        inputNode.ac.hide();
+    
+        // Remove the 'No photos selected' message if it exists.
+        photosNode.all('.empty').remove();
+    
+        // Append a new list item containing the selected photo.
+        photosNode.append(
+            '<li class="photo">' +
+                '<img src="' + getImageUrl(result, 't') +
+                '" alt="' + result.raw.title + '" title="' + result.raw.title + '">' +
+            '</li>'
+        );
+    });//Input node closed  
+   
+});//YUI closed
+</script>
+ 

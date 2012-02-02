@@ -1,0 +1,25 @@
+zf create action <actionname> <controller name> 1 <modulename>
+zf create action editaccesses user admin
+zf create action editcenters user admin
+zf create action editdbs user admin
+zf create action editgurus user admin
+zf create action editcounselors user admin
+zf create action editmentors user admin
+
+zf create db-table name actual-table-name module force-overwrite
+zf create db-table name actual-table-name module force-overwrite
+zf create db-table MstCenter mst_center
+
+
+
+
+ARRAAY
+Add add element to associative array
+$lstModules = array(0=>'All') + $lstModules;
+
+
+
+
+
+
+

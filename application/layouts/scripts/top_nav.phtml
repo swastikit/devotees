@@ -1,0 +1,20 @@
+<?php
+echo '<ul id="main-menu-links">';
+foreach ($this->container as $page) {
+    $isActive = $page->isActive(false);
+    $liClass = $isActive ? ' class="active"' : '';
+    if($page->isVisible()){
+        echo '<li ' . $liClass . '>' . $this->menu()->htmlify($page) . '</li>', PHP_EOL;
+    }
+    
+}
+if(Zend_Auth::getInstance()->hasIdentity() ) { 
+    $str = "/index/logout";
+    $log = "Logout";  
+} else { 
+    $str = "/index/login";
+    $log = "Login";  
+}
+$liClass='';
+echo '<li ' . $liClass . '>' . '<a href="' . $this->baseurl() . $str . '" >' . $log . '</a></li>', PHP_EOL;
+echo '</ul>';

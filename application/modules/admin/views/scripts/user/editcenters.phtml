@@ -1,0 +1,161 @@
+<div class="clearfix"></div>
+<h1>Center Assigned</h1>
+<div style="margin-bottom:30px;width:500px;">
+    <div id="popUpMessage" class="msg"></div>
+    <div class="scrolDivBox">
+        <div class="scrolDivHeader">
+            <h2>Centers</h2>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Country&nbsp;:&nbsp;<?php echo $this->formSelect('selCountryId', $this->selCountryIds, null, $this->lstCountries) ?>
+        </div>
+        <div class="scrolDivList" style="height:250px!important;">
+            <?php if(count($this->list)): ?>
+            <ol id="olMaster">
+            <?php $c=0; foreach ($this->list as $u): ?>
+                <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><label for="selCenterIds-<?php echo $u['id'] ?>"><input type="checkbox" name="selCenterIds[]" id="selCenterIds-<?php echo $u['id'] ?>" value="<?php echo $u['id'] ?>" <?php echo $u['checked'] ?>/><?php echo "$c.  " . $this->escape($u['name']) . '-->' . $this->escape($u['country']) ?> </label> <?php ($u['isactive']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
+            <?php endforeach; ?>
+            </ol>
+            <?php else: ?>
+            <?php echo 'No action is assigned to this user.';?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div style="text-align:right;margin-top:6px;">
+        <input type="button" id="btnSavePopUp" value="Save"/>&nbsp;<input type="button" onclick="RG.hidePopUp();" value="Close"/>
+    </div>
+    <div class="scrolDivBox">
+        <div class="scrolDivHeader">
+            <h2>Selected Centers</h2>
+        </div>
+        <div class="scrolDivList" style="height:150px!important;">
+            <?php if(count($this->list)): ?>
+            <ol id="olSel">
+            <?php $c=0; foreach ($this->list as $u): ?>
+                <?php if($u['checked']=='checked'): ?>
+                <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><?php echo "$c.  " . $this->escape($u['name']) . '-->' . $this->escape($u['country']) . ($u['isactive']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
+                <?php endif;?>
+            <?php endforeach; ?>
+            </ol>
+            <?php else: ?>
+            <?php echo 'No action is assigned to this user.';?>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<script>
+    YUI().use('node','json-stringify','recordset', 'io-base','io-form', function (Y) {
+        var rsVar=<?php echo Zend_Json::encode($this->list) ?>;
+        var rsData = new Y.Recordset({records: rsVar});
+        rsData.plug(Y.Plugin.RecordsetFilter);
+        var toggleCheck = function(e) {
+            var id=e.currentTarget.get('value');
+            var subset = rsData.filter.filter("id", id);
+            var val = subset.getRecord(0).getValue();
+            var rec=subset.getRecord(0);
+            var index = rsData.indexOf(rec);
+            if(e.currentTarget.get('checked')){
+                val.checked='checked';    
+            }else{
+                val.checked='';
+            }
+            rsData.update(val,index);
+            renderListSel();
+        };
+        var filterMasterList = function(e) {
+            var country_id=Y.one('#selCountryId').get('value');
+            var subset;
+            if(country_id==0){
+                subset = rsData;
+            }else{
+                subset = rsData.filter.filter("country_id", country_id);    
+            }
+            renderList(subset);
+        };
+        var TEMPLATE_LI = '<li><div class="tabRowItems clearfix {bg}"><label for="selCenterIds-{id}"><input type="checkbox" name="selCenterIds[]" id="selCenterIds-{id}" value="{id}" {checked}>{sn}. {name}-->{country}</label> </div></li>';
+        var TEMPLATE_LI_SEL = '<li><div class="tabRowItems clearfix {bg}">{sn}. {name}-->{country} </label> </div></li>';
+        var renderList = function (rs) {
+            var ol = Y.one('#olMaster'),
+            i=0,
+            len = rs.getLength(),
+            html = '';
+            if (ol.hasChildNodes()) {
+            	ol.get('children').remove();
+            }
+            for (; i < len; i++) {
+                val = rs.getRecord(i).getValue();
+                val.sn=i+1;
+                val.bg = ((i%2 == 0)?'bg2':'bg1');
+                html += Y.Lang.sub(TEMPLATE_LI, val);
+            }
+            ol.append(html);
+        }
+        var renderListSel = function () {
+            rs = rsData.filter.filter("checked", "checked");
+            var ol = Y.one('#olSel'),
+            i=0,
+            len = rs.getLength(),
+            html = '';
+            if (ol.hasChildNodes()) {
+            	ol.get('children').remove();
+            }
+            for (; i < len; i++) {
+                val = rs.getRecord(i).getValue();
+                val.sn=i+1;
+                val.bg = ((i%2 == 0)?'bg2':'bg1');
+                html += Y.Lang.sub(TEMPLATE_LI_SEL, val);
+            }
+            ol.append(html);
+        }
+        var save=function(){
+            var jSelectedIds=Y.JSON.stringify(rsVar,["id","checked"]);
+            data='jSelectedIds=' + jSelectedIds;
+            var cfg = {
+                method: 'POST',
+                data:data
+            };
+            var sUrl = "/admin/user/editmoreinfo/info/<?php echo $this->info ?>/id/<?php echo $this->id ?>/do/SAVE";
+            pleaseWait.show();
+            var request = Y.io(sUrl, cfg);
+        }
+        Y.one('#olMaster').delegate('click', toggleCheck, 'input[type=checkbox]');
+        Y.one('#selCountryId').on('change', filterMasterList);
+        Y.one('#btnSavePopUp').on('click', save);
+        var handleFailure = function(ioId, o){
+        	pleaseWait.hide();
+        	if(o.responseText !== undefined){
+        		var s = "Server Problem";
+        		s += "\nTransaction id: " + ioId;
+        		s += "\nHTTP status: " + o.status;
+        		s += "\nStatus code message: " + o.statusText;
+        		s += "\nResponseText: " + o.responseText;
+        		alert(s);
+                Y.one('#error').set('innerHTML',s);
+        	}
+        };
+        var handleSuccess = function(ioId, o){
+            pleaseWait.hide();
+            if(o.responseText !== undefined){
+                Y.one('#error').set('innerHTML',o.responseText);
+                var res=eval('(' + o.responseText + ')');
+                if(res.htmlBody!== undefined && res.htmlBody!= ''){
+                    Y.one('#popUpContent').set('innerHTML',res.htmlBody);
+                    p.set("centered",true);
+                    responseDiv = document.getElementById('popUpContent');
+                    scripts = responseDiv.getElementsByTagName('script');
+                    eval(scripts[0].innerHTML);
+                }
+                if(res.message!== undefined && res.message!= ''){
+                    Y.one('#popUpMessage').set('innerHTML',res.message);
+                }
+                if(res.htmlBodyBg!== undefined && res.htmlBodyBg!= ''){
+                    Y.one('#tbCenters').set('innerHTML',res.htmlBodyBg);
+                }
+            }
+        }
+        Y.on('io:success', handleSuccess);
+        Y.on('io:failure', handleFailure);
+    })
+    //"id":"69","name":"Lisnaskea","country_id":"199","country":"Afghanistan","checked":"","isactive":"Y"}
+</script>
+ 

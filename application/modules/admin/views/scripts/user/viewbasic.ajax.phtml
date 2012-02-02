@@ -1,0 +1,31 @@
+<div class="picFull"><img src="/photos/<?php echo $this->escape($this->u['pics']);?>"/></div>
+<div class="col">
+    <dl class="table-display">
+    	<dt>Name</dt>
+    	<dd>: <?php echo $this->escape($this->u['search_name']);?></dd>
+    	<dt>User Id</dt>
+    	<dd>: <?php echo $this->escape($this->u['login']);?></dd>
+    	<dt>Role</dt>
+    	<dd>: <?php echo $this->escape($this->u['role']);?></dd>
+    	<dt>Email</dt>
+    	<dd>: <?php echo $this->escape($this->u['email']);?></dd>
+    	<dt>Mobile</dt>
+    	<dd>: <?php echo $this->escape($this->u['mobile']);?></dd>
+    	<dt>Acitve</dt>
+    	<dd>: <?php echo $this->u['is_active']=='Y'?'Yes':'No';?></dd>
+    	<dt>Temporary Password</dt>
+    	<dd>: <?php echo $this->u['is_temporary_pwd']=='Y'?'Yes':'No';?></dd>
+    	<dt>Blocked</dt>
+    	<dd>: <?php echo $this->u['is_blocked']=='Y'?'Yes' . (($this->u['blocked_reason'])==null?'': ' (' . $this->u['blocked_reason']) . ')':'No';?></dd>
+    	<dt>Owned By</dt>
+        <dd>: <?php echo $this->u['ownername']==null?'':$this->escape($this->u['ownername']);?></dd>
+    	<dt>Created By</dt>
+        <dd>: <?php $oDate = new DateTime($this->u['entered_date']); echo $this->u['enteredbyname']==null?'':$this->escape($this->u['enteredbyname']) . ' (' . $oDate->format("d-M-Y g:i A") . ')';?></dd>
+    	<dt>Last Modifiled By</dt>
+        <dd>: <?php $oDate = new DateTime($this->u['dolm']); echo $this->u['modifiedbyname']==null?'':$this->escape($this->u['modifiedbyname']) . ' (' . $oDate->format("d-M-Y g:i A") . ')';?></dd>
+    	<dt>Remarks</dt>
+    	<dd>: <?php echo $this->u['remarks']==null?'':$this->escape($this->u['remarks']);?></dd>
+    </dl>
+    <span class="linkAction topcorner"><a href="javascript:void(0)" onclick="RG.editUserBasic(<?php echo $this->escape($this->id);?>);">Edit</a></span>
+</div>
+<div class="clearfix"></div>
