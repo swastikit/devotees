@@ -174,7 +174,7 @@ $CounseleeStatusOptions = $CounseleeStatus->getCounseleeStatus();
 $CounsellingStatus = new Zend_Form_Element_Select('counselee_status');
 $CounsellingStatus ->setName('counselee_status')
                    ->setLabel('Counselling Status*')
-                   //->setRequired(true)
+                   ->setRequired(true)
                    ->setMultiOptions($CounseleeStatusOptions);
 
 $ActiveStatus = new Zend_Form_Element_Select('active_status');

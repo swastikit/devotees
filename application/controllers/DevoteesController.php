@@ -108,7 +108,7 @@ public function addnewdevoteeAction()
               'first_name'      =>$this->getRequest()->getPost('first_name') ,
               'middle_name'     =>$this->getRequest()->getPost('middle_name'),
               'last_name'       =>$this->getRequest()->getPost('last_name'),
-              'do_birth'        =>$this->getRequest()->getPost('day').'-'.$this->getRequest()->getPost('month').'-'.$this->getRequest()->getPost('year'),
+              'do_birth'        =>date_format($this->getRequest()->getPost('day').'-'.$this->getRequest()->getPost('month').'-'.$this->getRequest()->getPost('year')),     //$this->getRequest()->getPost('day').'-'.$this->getRequest()->getPost('month').'-'.$this->getRequest()->getPost('year'),
               'gender'          =>$this->getRequest()->getPost('gender'),
               'country_id'      =>$this->getRequest()->getPost('cc'),
               'center_id'       =>$this->getRequest()->getPost('center'),
