@@ -85,25 +85,7 @@ public function addnewdevoteeAction()
     $form = new Application_Form_Devotees_AddNewDevotee();
     $form->setName('addnewdevotee');
     $d = new Application_Model_DbTable_Devotee();
-    //$did = '';
-    /* 
-    $fname = $this->getRequest()->getPost('first_name');
-    $mname = $this->getRequest()->getPost('middle_name');
-    $lname = $this->getRequest()->getPost('last_name');
-    $d_o_b = array($this->getRequest()->getPost('day'),$this->getRequest()->getPost('month'),$this->getRequest()->getPost('year'));
-    $gender = $this->getRequest()->getPost('gender');
-    $countryCode = $this->getRequest()->getPost('cc');
-    $CenterId = $this->getRequest()->getPost('center');
-    $Counselor_Id = $this->getRequest()->getPost('counselor');
-    $mobile_number = $this->getRequest()->getPost('mobile');
-    $email_id = $this->getRequest()->getPost('email');
-    $present_phone = $this->getRequest()->getPost('phone_number');
-    $counselee_Status = $this->getRequest()->getPost('counselee_status');
-    $Devotee_Status = $this->getRequest()->getPost('active_status');
-    $Asram_Status = $this->getRequest()->getPost('marital_status');
-    $Mother_Tongue = $this->getRequest()->getPost('mother_tongue');
-    $Blood_
-    */
+    
     $devotee_data = array( 
               'first_name'      =>$this->getRequest()->getPost('first_name') ,
               'middle_name'     =>$this->getRequest()->getPost('middle_name'),
