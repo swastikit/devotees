@@ -265,7 +265,7 @@
     <table>
             <tr>
                 <td>
-                    <dd><?php echo $form->submit->renderViewHelper(); echo (($form->submit->hasErrors())?'<dd>' . $form->submit->renderErrors() .'</dd>' :'');?></dd>
+                    <dd><?php  echo $form->submit->renderLabel(); ?><?php echo $form->submit->renderViewHelper(); echo (($form->submit->hasErrors())?'<dd>' . $form->submit->renderErrors() .'</dd>' :'');?></dd>
                 </td>
             </tr>
     </table>
