@@ -570,8 +570,8 @@ $SanyasTitle->setName('sanyas_title')
 //$ServicesRendered = new Zend_Form_Element_
 
 $Submit = new Zend_Form_Element_Submit('submit');
-$Submit ->setLabel('Submit')
-        ->setName('submit');
+$Submit ->setName('submit')
+        ->setAttrib('value','Save and Continue');
         
 $this->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,$CountryCode,$Mobile,$PhoneNumber,$Email,$Center,$Counselor,
                          $Mentor,$CounsellingStatus,$ActiveStatus,$MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown,$NativePlace,$NativeState,$MaritalStatus,$Submit));
