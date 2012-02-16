@@ -449,10 +449,22 @@ $NumberOfRoundsPresentlyChanting = new  Zend_Form_Element_Select('no_rou_pre_cha
 $NumberOfRoundsPresentlyChanting->setLabel('Number Of Rounds Presently Chanting')
                                 ->setName('no_rou_pre_chanting')
                                 ->SetMultiOptions(array(
-array('value'=>'1','key'=>'1'),array('value'=>'2','key'=>'2'),array('value'=>'3','key'=>'3'),array('value'=>'4','key'=>'4'),
-array('value'=>'5','key'=>'5'),array('value'=>'6','key'=>'6'),array('value'=>'7','key'=>'7'),array('value'=>'8','key'=>'8'),
-array('value'=>'9','key'=>'9'),array('value'=>'10','key'=>'10'),array('value'=>'11','key'=>'11'),array('value'=>'12','key'=>'12'),
-array('value'=>'13','key'=>'13'),array('value'=>'14','key'=>'14'),array('value'=>'15','key'=>'15'),array('value'=>'16','key'=>'16'),
+                                                        array('value'=>'1','key'=>'1'),
+                                                        array('value'=>'2','key'=>'2'),
+                                                        array('value'=>'3','key'=>'3'),
+                                                        array('value'=>'4','key'=>'4'),
+                                                        array('value'=>'5','key'=>'5'),
+                                                        array('value'=>'6','key'=>'6'),
+                                                        array('value'=>'7','key'=>'7'),
+                                                        array('value'=>'8','key'=>'8'),
+                                                        array('value'=>'9','key'=>'9'),
+                                                        array('value'=>'10','key'=>'10'),
+                                                        array('value'=>'11','key'=>'11'),
+                                                        array('value'=>'12','key'=>'12'),
+                                                        array('value'=>'13','key'=>'13'),
+                                                        array('value'=>'14','key'=>'14'),
+                                                        array('value'=>'15','key'=>'15'),
+                                                        array('value'=>'16','key'=>'16'),
                                                        ));
 
 $Chanting16RoundsSince = new  Zend_Form_Element_Select('chan_16_rounds_since');
@@ -569,9 +581,9 @@ $SanyasTitle->setName('sanyas_title')
                                       
 //$ServicesRendered = new Zend_Form_Element_
 
-$Submit = new Zend_Form_Element_Submit('submit');
-$Submit ->setName('submit')
-        ->setAttrib('value','Save and Continue');
+$Submit = new Zend_Form_Element_Submit('SAVE');
+$Submit ->setName('SAVE')
+        ->setLabel('SAVE');
         
 $this->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,$CountryCode,$Mobile,$PhoneNumber,$Email,$Center,$Counselor,
                          $Mentor,$CounsellingStatus,$ActiveStatus,$MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown,$NativePlace,$NativeState,$MaritalStatus,$Submit));
