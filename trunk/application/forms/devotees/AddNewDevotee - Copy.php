@@ -5,25 +5,25 @@ class Application_Form_Devotees_AddNewDevotee extends Zend_Form
     public function init(){
     //parent::__construct($options);
     
-$this->setName('addnewdevotee')
-     ->setAction('addnewdevotee')
-     ->setAttrib('id','addnewdevotee')
-     ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+    $this->setName('addnewdevotee')
+         ->setAction('addnewdevotee')
+         ->setAttrib('id','addnewdevotee')
+         ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
 
     //Preliminary Information aboout Devotee
     
-$DevPic = new Zend_Form_Element_File('uplphoto');
-$DevPic ->setLabel('Upload Your Photo Here')
-        ->setName('uplphoto');
-$path     = 'photos/';
-$DevPic ->setDestination($path)
-        //->setMaxFileSize(2097152)
-        ->addValidator('Size',true,array('max'=>'4096000','messages'=>'The maximum permitted image file size is %max% selected image file size is %size%.'))
-        ->addValidator('Extension',true,array('jpg,jpeg', 
-                                              'messages' => 'photo with only jpg, jpeg or gif format 
-                                                             are accepted for uploading profile.'))
-        ->setRequired(true)
-        ->addValidator('NotEmpty');
+    $DevPic = new Zend_Form_Element_File('uplphoto');
+    $DevPic ->setLabel('Upload Your Photo Here')
+            ->setName('uplphoto');
+    $path     = 'photos/';
+    $DevPic ->setDestination($path)
+            //->setMaxFileSize(2097152)
+            ->addValidator('Size',true,array('max'=>'4096000','messages'=>'The maximum permitted image file size is %max% selected image file size is %size%.'))
+            ->addValidator('Extension',true,array('jpg,jpeg', 
+                                                  'messages' => 'photo with only jpg, jpeg or gif format 
+                                                                 are accepted for uploading profile.'))
+            ->setRequired(true)
+            ->addValidator('NotEmpty');
         
 //->setValidators(array('Size'=>array('min' => 20,'max' => 20000),'Count' =>array('min' => 1,'max' => 3)))
 //->addValidator('IsImage');
@@ -448,11 +448,22 @@ $BeganChantingNA->setLabel('N/A')
 $NumberOfRoundsPresentlyChanting = new  Zend_Form_Element_Select('no_rou_pre_chanting');
 $NumberOfRoundsPresentlyChanting->setLabel('Number Of Rounds Presently Chanting')
                                 ->setName('no_rou_pre_chanting')
-                                ->SetMultiOptions(array(
-array('value'=>'1','key'=>'1'),array('value'=>'2','key'=>'2'),array('value'=>'3','key'=>'3'),array('value'=>'4','key'=>'4'),
-array('value'=>'5','key'=>'5'),array('value'=>'6','key'=>'6'),array('value'=>'7','key'=>'7'),array('value'=>'8','key'=>'8'),
-array('value'=>'9','key'=>'9'),array('value'=>'10','key'=>'10'),array('value'=>'11','key'=>'11'),array('value'=>'12','key'=>'12'),
-array('value'=>'13','key'=>'13'),array('value'=>'14','key'=>'14'),array('value'=>'15','key'=>'15'),array('value'=>'16','key'=>'16'),
+                                ->SetMultiOptions(array(array('value'=>'1','key'=>'1'),
+                                                        array('value'=>'2','key'=>'2'),
+                                                        array('value'=>'3','key'=>'3'),
+                                                        array('value'=>'4','key'=>'4'),
+                                                        array('value'=>'5','key'=>'5'),
+                                                        array('value'=>'6','key'=>'6'),
+                                                        array('value'=>'7','key'=>'7'),
+                                                        array('value'=>'8','key'=>'8'),
+                                                        array('value'=>'9','key'=>'9'),
+                                                        array('value'=>'10','key'=>'10'),
+                                                        array('value'=>'11','key'=>'11'),
+                                                        array('value'=>'12','key'=>'12'),
+                                                        array('value'=>'13','key'=>'13'),
+                                                        array('value'=>'14','key'=>'14'),
+                                                        array('value'=>'15','key'=>'15'),
+                                                        array('value'=>'16','key'=>'16'),
                                                        ));
 
 $Chanting16RoundsSince = new  Zend_Form_Element_Select('chan_16_rounds_since');
@@ -569,9 +580,9 @@ $SanyasTitle->setName('sanyas_title')
                                       
 //$ServicesRendered = new Zend_Form_Element_
 
-$Submit = new Zend_Form_Element_Submit('submit');
-$Submit ->setLabel('Submit')
-        ->setName('submit');
+$Submit = new Zend_Form_Element_Submit('SAVE');
+$Submit ->setName('SAVE')
+        ->setLabel('SAVE');
         
 $this->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,$CountryCode,$Mobile,$PhoneNumber,$Email,$Center,$Counselor,
                          $Mentor,$CounsellingStatus,$ActiveStatus,$MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown,$NativePlace,$NativeState,$MaritalStatus,$Submit));

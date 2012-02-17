@@ -5,25 +5,25 @@ class Application_Form_Devotees_AddNewDevotee extends Zend_Form
     public function init(){
     //parent::__construct($options);
     
-$this->setName('addnewdevotee')
-     ->setAction('addnewdevotee')
-     ->setAttrib('id','addnewdevotee')
-     ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
+    $this->setName('addnewdevotee')
+         ->setAction('addnewdevotee')
+         ->setAttrib('id','addnewdevotee')
+         ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
 
     //Preliminary Information aboout Devotee
     
-$DevPic = new Zend_Form_Element_File('uplphoto');
-$DevPic ->setLabel('Upload Your Photo Here')
-        ->setName('uplphoto');
-$path     = 'photos/';
-$DevPic ->setDestination($path)
-        //->setMaxFileSize(2097152)
-        ->addValidator('Size',true,array('max'=>'4096000','messages'=>'The maximum permitted image file size is %max% selected image file size is %size%.'))
-        ->addValidator('Extension',true,array('jpg,jpeg', 
-                                              'messages' => 'photo with only jpg, jpeg or gif format 
-                                                             are accepted for uploading profile.'))
-        ->setRequired(true)
-        ->addValidator('NotEmpty');
+    $DevPic = new Zend_Form_Element_File('uplphoto');
+    $DevPic ->setLabel('Upload Your Photo Here')
+            ->setName('uplphoto');
+    $path     = 'photos/';
+    $DevPic ->setDestination($path)
+            //->setMaxFileSize(2097152)
+            ->addValidator('Size',true,array('max'=>'4096000','messages'=>'The maximum permitted image file size is %max% selected image file size is %size%.'))
+            ->addValidator('Extension',true,array('jpg,jpeg', 
+                                                  'messages' => 'photo with only jpg, jpeg or gif format 
+                                                                 are accepted for uploading profile.'))
+            ->setRequired(true)
+            ->addValidator('NotEmpty');
         
 //->setValidators(array('Size'=>array('min' => 20,'max' => 20000),'Count' =>array('min' => 1,'max' => 3)))
 //->addValidator('IsImage');
@@ -448,8 +448,7 @@ $BeganChantingNA->setLabel('N/A')
 $NumberOfRoundsPresentlyChanting = new  Zend_Form_Element_Select('no_rou_pre_chanting');
 $NumberOfRoundsPresentlyChanting->setLabel('Number Of Rounds Presently Chanting')
                                 ->setName('no_rou_pre_chanting')
-                                ->SetMultiOptions(array(
-                                                        array('value'=>'1','key'=>'1'),
+                                ->SetMultiOptions(array(array('value'=>'1','key'=>'1'),
                                                         array('value'=>'2','key'=>'2'),
                                                         array('value'=>'3','key'=>'3'),
                                                         array('value'=>'4','key'=>'4'),
