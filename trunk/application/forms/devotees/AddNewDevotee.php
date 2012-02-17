@@ -10,7 +10,9 @@ class Application_Form_Devotees_AddNewDevotee extends Zend_Form
          ->setAttrib('id','addnewdevotee')
          ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
 
-    //Preliminary Information aboout Devotee
+//SUB FORM for Preliminary Information aboout Devotee
+
+$Sub_Form_BasicInfo = new Zend_Form_SubForm();
     
     $DevPic = new Zend_Form_Element_File('uplphoto');
     $DevPic ->setLabel('Upload Your Photo Here')
@@ -25,180 +27,193 @@ class Application_Form_Devotees_AddNewDevotee extends Zend_Form
             ->setRequired(true)
             ->addValidator('NotEmpty');
         
-//->setValidators(array('Size'=>array('min' => 20,'max' => 20000),'Count' =>array('min' => 1,'max' => 3)))
+//->setValidators(array('Size'=>array('min' => 20,'max' =>2097152),'Count' =>array('min' => 1,'max' => 3)))
 //->addValidator('IsImage');
 //to disable the viewrenderer use 
 //$this->_helper->viewRenderer->setNoRender(true);
     
-$Fname = new Zend_Form_Element_Text('first_name');
-$Fname ->setLabel('First Name*')
-       ->setName('first_name')
-       ->setAttrib('placeholder','First Name')
-       ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
-       ->setRequired(true)
-       ->addValidator('NotEmpty')
-       ->addFilters(array('StripTags','StringTrim'));
-           
-$Mname = new Zend_Form_Element_Text('middle_name');
-$Mname ->setLabel('Middle Name*')
-       ->setName('middle_name')
-       ->setAttrib('placeholder','Middle Name')
-       ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
-       ->setRequired(true)
-       ->addValidator('NotEmpty')
-       ->addFilters(array('StripTags','StringTrim'));
-
-$Lname = new Zend_Form_Element_Text('last_name');
-$Lname ->setLabel('Last Name*')
-       ->setName('last_name')
-       ->setAttrib('placeholder','Last Name')
-       ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
-       ->setRequired(true)
-       ->addValidator('NotEmpty')
-       ->addFilters(array('StripTags','StringTrim'));
-           
-$Day = new  Zend_Form_Element_Select('day');
-$Day ->setLabel('Date of Birth*')
-     ->setName('day')
-     ->setRequired(true)
-     ->setMultiOptions(Rgm_Basics::getDates())
-     ->addValidator('NotEmpty')
-     ->addFilters(array('StripTags','StringTrim'));
-
-$Month = new Zend_Form_Element_Select('month');
-$Month ->setName('month')
-       ->setRequired(true)
-       ->setMultiOptions(Rgm_Basics::getMonths())
-       ->addValidator('NotEmpty')
-       ->addFilters(array('StripTags','StringTrim'));
-
-$Year = new Zend_Form_Element_Select('year');      
-$Year ->setName('year')
-      ->setRequired(true)
-      ->setMultiOptions(Rgm_Basics::getYears(1912,2012))
-      ->addValidator('NotEmpty')
-      ->addFilters(array('StripTags','StringTrim'));
-   
-$Gender = new Zend_Form_Element_Radio('gender');
-$Gender ->setName('gender')
-        ->setLabel('Gender*')
-        ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
-        ->setRequired(true)
-        ->setMultiOptions(array('M' => 'Male','F' => 'Female'))
-        ->setSeparator('')
-        ->addFilters(array('StripTags','StringTrim'));           
-        
-$centr  =new Application_Model_DbTable_MstCenter();
-$CenterOptions =$centr->getKeyValues();
-$Center = new Zend_Form_Element_Select('center');
-$Center ->setName('center')
-        ->setLabel('Center*')
-        ->setMultiOptions($CenterOptions)
-        ->setRequired(false)
-        ->addValidator('NotEmpty')
-        ->addFilters(array('StripTags','StringTrim'));
-
-
-$con=new Application_Model_DbTable_MstCounselor();    
-$Counselor = new Zend_Form_Element_Select('counselor');
-$CounselorOptions = array(0=>'Select Counselor') + $con->getKeyValues();
-$Counselor ->setName('counselor')
-           ->setMultiOptions($CounselorOptions)
-           ->setLabel('Counselor')
-           ->setRequired(false)
+    $Fname = new Zend_Form_Element_Text('first_name');
+    $Fname ->setLabel('First Name*')
+           ->setName('first_name')
+           ->setAttrib('placeholder','First Name')
+           ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
+           ->setRequired(true)
            ->addValidator('NotEmpty')
-           ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
-           ->addFilters(array('StripTags','StringTrim', 'StringToLower'));
-
-$ment=new Application_Model_DbTable_MstAstCounselor();
-$MentorOptions = array(0=>'Select Mentor') + $ment->getKeyValues();
-$Mentor = new Zend_Form_Element_Select('mentor');
-$Mentor ->setName('mentor')
-        ->setLabel('Mentor')
-        ->setMultioptions($MentorOptions )
-        ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
-        ->setRequired(false)
-        ->addValidator('NotEmpty')
-        ->addFilters(array('StripTags','StringTrim', 'StringToLower'));
-              
-$Mobile = new Zend_Form_Element_Text('mobile');
-$Mobile ->setName('mobile')
-        ->setLabel('Mobile No')
-        ->addFilters(array('StripTags','StringTrim'))
-        ->addValidator('NotEmpty')
-        ->addValidator(new Rgm_Validate_MobileNumber())
-        ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)));
-        
-$CC = new Application_Model_DbTable_MstCountry();
-$CCOptions =$CC->getPairWithTelCode(); 
+           ->addFilters(array('StripTags','StringTrim'));
+               
+    $Mname = new Zend_Form_Element_Text('middle_name');
+    $Mname ->setLabel('Middle Name*')
+           ->setName('middle_name')
+           ->setAttrib('placeholder','Middle Name')
+           ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
+           ->setRequired(true)
+           ->addValidator('NotEmpty')
+           ->addFilters(array('StripTags','StringTrim'));
     
-$CountryCode = new Zend_Form_Element_Select('cc');
-$CountryCode ->setName('cc')
-             ->setLabel('Country Code*')
-             ->setMultiOptions($CCOptions)                 
-             ->setRequired(true)
-             ->addValidator('NotEmpty');
-
-$PhoneNumber = new Zend_Form_Element_Text('phone_number');
-$PhoneNumber ->setName('phone_number')
-             ->setLabel('Phone Number(R/O)')
-             ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
-             ->addFilters(array('StripTags','StringTrim'))
-             ->setRequired(false);
-
-$Email = new Zend_Form_Element_Text('email');
-$Email ->setName('email')
-       ->setLabel('Email Id:')
-       ->addValidator('NotEmpty')
-       ->addValidator('EmailAddress')
-       ->addFilters(array('StripTags','StringTrim'));
-
-$langsknownOptions = new Application_Model_DbTable_MstLanguage();
-$langsknownOptions =$langsknownOptions->getLanguagelist();     
+    $Lname = new Zend_Form_Element_Text('last_name');
+    $Lname ->setLabel('Last Name*')
+           ->setName('last_name')
+           ->setAttrib('placeholder','Last Name')
+           ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
+           ->setRequired(true)
+           ->addValidator('NotEmpty')
+           ->addFilters(array('StripTags','StringTrim'));
+               
+    $Day = new  Zend_Form_Element_Select('day');
+    $Day ->setLabel('Date of Birth*')
+         ->setName('day')
+         ->setRequired(true)
+         ->setMultiOptions(Rgm_Basics::getDates())
+         ->addValidator('NotEmpty')
+         ->addFilters(array('StripTags','StringTrim'));
+    
+    $Month = new Zend_Form_Element_Select('month');
+    $Month ->setName('month')
+           ->setRequired(true)
+           ->setMultiOptions(Rgm_Basics::getMonths())
+           ->addValidator('NotEmpty')
+           ->addFilters(array('StripTags','StringTrim'));
+    
+    $Year = new Zend_Form_Element_Select('year');      
+    $Year ->setName('year')
+          ->setRequired(true)
+          ->setMultiOptions(Rgm_Basics::getYears(1912,2012))
+          ->addValidator('NotEmpty')
+          ->addFilters(array('StripTags','StringTrim'));
        
-$MotherTongue = new Zend_Form_Element_select('mother_tongue');
-$MotherTongue ->setName('mother_tongue')
-              ->setLabel('Mother Tongue*')
-              ->setMultiOptions($langsknownOptions)
-              ->addFilters(array('StripTags','StringTrim'))
-              ->setRequired(true);
-              
-$LanguagesKnown = new Zend_Form_Element_MultiSelect('languages_known');
-$LanguagesKnown ->setName('languages_known')
-                ->setLabel('Languages Known* ')
-                ->setMultiOptions($langsknownOptions)
-                ->setRequired(true);
-                
-$CounseleeStatus = new Application_Model_DbTable_MstCounseleeStatus();
-$CounseleeStatusOptions = $CounseleeStatus->getCounseleeStatus();
-$CounsellingStatus = new Zend_Form_Element_Select('counselee_status');
-$CounsellingStatus ->setName('counselee_status')
-                   ->setLabel('Counselling Status*')
-                   ->setRequired(true)
-                   ->setMultiOptions($CounseleeStatusOptions);
+    $Gender = new Zend_Form_Element_Radio('gender');
+    $Gender ->setName('gender')
+            ->setLabel('Gender*')
+            ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
+            ->setRequired(true)
+            ->setMultiOptions(array('M' => 'Male','F' => 'Female'))
+            ->setSeparator('')
+            ->addFilters(array('StripTags','StringTrim'));           
+            
+    $centr  = new Application_Model_DbTable_MstCenter();
+    $CenterOptions =$centr->getKeyValues();
+    $Center = new Zend_Form_Element_Select('center');
+    $Center ->setName('center')
+            ->setLabel('Center*')
+            ->setMultiOptions($CenterOptions)
+            ->setRequired(false)
+            ->addValidator('NotEmpty')
+            ->addFilters(array('StripTags','StringTrim'));
+    
+    
+    $con=new Application_Model_DbTable_MstCounselor();    
+    $Counselor = new Zend_Form_Element_Select('counselor');
+    $CounselorOptions = array(0=>'Select Counselor') + $con->getKeyValues();
+    $Counselor ->setName('counselor')
+               ->setMultiOptions($CounselorOptions)
+               ->setLabel('Counselor')
+               ->setRequired(false)
+               ->addValidator('NotEmpty')
+               ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
+               ->addFilters(array('StripTags','StringTrim', 'StringToLower'));
+    
+    $ment=new Application_Model_DbTable_MstAstCounselor();
+    $MentorOptions = array(0=>'Select Mentor') + $ment->getKeyValues();
+    $Mentor = new Zend_Form_Element_Select('mentor');
+    $Mentor ->setName('mentor')
+            ->setLabel('Mentor')
+            ->setMultioptions($MentorOptions )
+            ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
+            ->setRequired(false)
+            ->addValidator('NotEmpty')
+            ->addFilters(array('StripTags','StringTrim', 'StringToLower'));
+                  
+    $Mobile = new Zend_Form_Element_Text('mobile');
+    $Mobile ->setName('mobile')
+            ->setLabel('Mobile No')
+            ->addFilters(array('StripTags','StringTrim'))
+            ->addValidator('NotEmpty')
+            ->addValidator(new Rgm_Validate_MobileNumber())
+            ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)));
+            
+    $CC = new Application_Model_DbTable_MstCountry();
+    $CCOptions =$CC->getPairWithTelCode(); 
+        
+    $CountryCode = new Zend_Form_Element_Select('cc');
+    $CountryCode ->setName('cc')
+                 ->setLabel('Country Code*')
+                 ->setMultiOptions($CCOptions)                 
+                 ->setRequired(true)
+                 ->addValidator('NotEmpty');
+    
+    $PhoneNumber = new Zend_Form_Element_Text('phone_number');
+    $PhoneNumber ->setName('phone_number')
+                 ->setLabel('Phone Number(R/O)')
+                 ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true)))
+                 ->addFilters(array('StripTags','StringTrim'))
+                 ->setRequired(false);
+    
+    $Email = new Zend_Form_Element_Text('email');
+    $Email ->setName('email')
+           ->setLabel('Email Id:')
+           ->addValidator('NotEmpty')
+           ->addValidator('EmailAddress')
+           ->addFilters(array('StripTags','StringTrim'));
+                    
+    $CounseleeStatus = new Application_Model_DbTable_MstCounseleeStatus();
+    $CounseleeStatusOptions = $CounseleeStatus->getCounseleeStatus();
+    $CounsellingStatus = new Zend_Form_Element_Select('counselee_status');
+    $CounsellingStatus ->setName('counselee_status')
+                       ->setLabel('Counselling Status*')
+                       ->setRequired(true)
+                       ->setMultiOptions($CounseleeStatusOptions);
+    
+    $ActiveStatus = new Zend_Form_Element_Select('active_status');
+    $ActiveStatus ->setName('active_status')
+                  ->setLabel('Active Status*')
+                  ->setMultiOptions(array('A'=>'Active',
+                                          'I'=>'Inactive',
+                                          'E'=>'Deceased'))
+                  ->setRequired(true);
 
-$ActiveStatus = new Zend_Form_Element_Select('active_status');
-$ActiveStatus ->setName('active_status')
-              ->setLabel('Active Status*')
-              ->setMultiOptions(array('A'=>'Active',
-                                      'I'=>'Inactive',
-                                      'E'=>'Deceased'))
-              ->setRequired(true);
-                                      //----------------done till here
-/*Personal Information */                                           
+    $Sub_Form_BasicInfo->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,
+                                           $CountryCode,$Mobile,$PhoneNumber,$Email,$Center,
+                                           $Counselor,$Mentor,$CounsellingStatus,$ActiveStatus));
 
-$BldGrp = new Zend_Form_Element_Select('bld_grp');
-$BldGrp->setName('bld_grp')
-       ->setLabel('Blood Group')
-       ->setMultiOptions(Rgm_Basics::getBloodGroupsAsoArr());
-       
-$Religion = new Application_Model_DbTable_MstReligion();
-$ReligionOptions =$Religion->getReligionslist();
-$PrevReligion = new Zend_Form_Element_Select('previous_religion');
-$PrevReligion->setName('previous_religion')
-             ->setLabel('Previous Religion*')
-             ->setMultiOptions($ReligionOptions)
-             ->setRequired(true);
+/*Personal Information */
+
+
+$Sub_Form_Personal_Info = new Zend_Form_SubForm();
+
+    $langsknownOptions = new Application_Model_DbTable_MstLanguage();
+    $langsknownOptions =$langsknownOptions->getLanguagelist();     
+           
+    $MotherTongue = new Zend_Form_Element_select('mother_tongue');
+    $MotherTongue ->setName('mother_tongue')
+                  ->setLabel('Mother Tongue*')
+                  ->setMultiOptions($langsknownOptions)
+                  ->addFilters(array('StripTags','StringTrim'))
+                  ->setRequired(true);
+                  
+    $LanguagesKnown = new Zend_Form_Element_MultiSelect('languages_known');
+    $LanguagesKnown ->setName('languages_known')
+                    ->setLabel('Languages Known* ')
+                    ->setMultiOptions($langsknownOptions)
+                    ->setRequired(true);
+
+    $BldGrp = new Zend_Form_Element_Select('bld_grp');
+    $BldGrp->setName('bld_grp')
+           ->setLabel('Blood Group')
+           ->setMultiOptions(Rgm_Basics::getBloodGroupsAsoArr());
+    
+    $Religion = new Application_Model_DbTable_MstReligion();
+    $ReligionOptions =$Religion->getReligionslist();
+    $PrevReligion = new Zend_Form_Element_Select('previous_religion');
+    $PrevReligion->setName('previous_religion')
+                 ->setLabel('Previous Religion*')
+                 ->setMultiOptions($ReligionOptions)
+                 ->setRequired(true);
+
+$Sub_Form_Personal_Info->addElements(array($MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown));                                           
+
+
+$Sub_Form_Address_Info = new Zend_Form_SubForm();
+//PRESENT AND PERMENANT ADDRESS INFORMATION       
            
 $NativePlace = new Zend_Form_Element_Text('native_place');
 $NativePlace ->setName('native_place')
@@ -207,7 +222,7 @@ $NativePlace ->setName('native_place')
              ->addFilters(array('StripTags','StringTrim','StringToLower'));
              
 $NativeStatedb = new Application_Model_DbTable_MstState();
-$NativeStateOptions = $NativeStatedb-> 
+$NativeStateOptions = $NativeStatedb->getStateKeyValues(); 
 
 $NativeState = new Zend_Form_Element_Select('native_state');
 $NativeState ->setName('native_state')
@@ -445,9 +460,9 @@ $BeganChantingNA->setLabel('N/A')
                                             array('value'=>'No','key'=>'N'),
                                             ));
 
-$NumberOfRoundsPresentlyChanting = new  Zend_Form_Element_Select('no_rou_pre_chanting');
+$NumberOfRoundsPresentlyChanting = new  Zend_Form_Element_Select('no_rou_pres_chanting');
 $NumberOfRoundsPresentlyChanting->setLabel('Number Of Rounds Presently Chanting')
-                                ->setName('no_rou_pre_chanting')
+                                ->setName('no_rou_pres_chanting')
                                 ->SetMultiOptions(array(array('value'=>'1','key'=>'1'),
                                                         array('value'=>'2','key'=>'2'),
                                                         array('value'=>'3','key'=>'3'),
@@ -580,11 +595,14 @@ $SanyasTitle->setName('sanyas_title')
                                       
 //$ServicesRendered = new Zend_Form_Element_
 
-$Submit = new Zend_Form_Element_Submit('SAVE');
-$Submit ->setName('SAVE')
-        ->setLabel('SAVE');
-        
-$this->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,$CountryCode,$Mobile,$PhoneNumber,$Email,$Center,$Counselor,
-                         $Mentor,$CounsellingStatus,$ActiveStatus,$MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown,$NativePlace,$NativeState,$MaritalStatus,$Submit));
+
+//Adding SUBFORMS
+            $this->addSubForms(array(
+                                     'basic_info'  => $Sub_Form_BasicInfo
+                             //      'demog' => $demog,
+                               //    'lists' => $lists
+                                    ));
+
+$this->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,$CountryCode,$Mobile,$PhoneNumber,$Email,$Center,$Counselor,$Mentor,$CounsellingStatus,$ActiveStatus,$MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown,$NativePlace,$NativeState,$MaritalStatus));
         }
 }
