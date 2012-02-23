@@ -1,1 +1,0 @@
-mysession|a:1:{s:7:"counter";i:1001;}Zend_Auth|a:1:{s:7:"storage";a:5:{s:7:"role_id";s:1:"1";s:9:"role_name";s:13:"Administrator";s:7:"user_id";s:1:"2";s:9:"user_name";s:6:"rgmdba";s:10:"login_name";s:6:"rgmdba";}}ACTIVE_MENU_ID|a:2:{s:19:"ACTIVE_MAIN_MENU_ID";s:1:"4";s:18:"ACTIVE_SUB_MENU_ID";s:2:"30";}
