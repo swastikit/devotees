@@ -167,8 +167,7 @@ class DevoteesController extends Zend_Controller_Action
     public function getNextSubForm(){
         $storedForms    = $this->getStoredForms();
         $potentialForms = $this->getPotentialForms();
-        echo "We are in function getNextSubForm";
-        //Zend_Debug::dump($potentialForms);
+ 
         foreach ($potentialForms as $name) {
             if (!in_array($name, $storedForms)) {
                 return $this->getForm()->getSubForm($name);
@@ -203,7 +202,7 @@ class DevoteesController extends Zend_Controller_Action
     public function formIsValid(){
         $data = array();
         foreach ($this->getSessionNamespace() as $key => $info) {
-            $data[$key] = $info[$key]; 
+                 $data[$key] = $info[$key]; 
         }
         return $this->getForm()->isValid($data);
     }
@@ -212,64 +211,44 @@ class DevoteesController extends Zend_Controller_Action
     public function addnewdevoteeAction(){
         // Either re-display the current page, or grab the "next"
         // (first) sub form
-            
             if (!$form = $this->getCurrentSubForm()) {
-            $form = $this->getNextSubForm();
-            Zend_Debug::dump('I am at step I');
+                $form = $this->getNextSubForm();
             }
             
             if($form){
-            Zend_Debug::dump('I am at step II');
-            $form = $this->getForm()->prepareSubForm($form);
-            $this->view->form = $form;
+               $form = $this->getForm()->prepareSubForm($form);
+               $this->view->form = $form;
             }
-            
-            //if(!$form){
-              //return  $this->render('verification');
-            //}
-            
-            }
+             
+    }
     
     public function verificationAction(){
         // it was created to just display the final data once the addnewdevotee form is successfully validated.
     }
     
     public function processAction(){
- Zend_Debug::dump('I am at step III');
         if (!$form = $this->getCurrentSubForm()){
-            Zend_Debug::dump('I am at step IV');
             return $this->_forward('addnewdevotee');
         }
- Zend_Debug::dump('I am at step V');
+        
         if (!$this->subFormIsValid($form,$this->getRequest()->getPost())) {
-            Zend_Debug::dump('I am at step VI');    
             $this->view->form = $this->getForm()->prepareSubForm($form);
             return $this->render('addnewdevotee');
         }
-/*Zend_Debug::dump('OK5');
-        if (!$this->formIsValid()) {
-            Zend_Debug::dump($this->getForm()->getErrors());
-            $form = $this->getNextSubForm();
-            $this->view->form = $this->getForm()->prepareSubForm($form);
-            return $this->render('');
+        
+        $form = $this->getNextSubForm();
+        
+        if($form) {
+           $this->view->form = $this->getForm()->prepareSubForm($form);
+           return $this->render('addnewdevotee');
         }
-*/        
-        if (!$this->formIsValid()) {
-            Zend_Debug::dump('I am at step VII');
-            $form = $this->getNextSubForm();
-            if ($form) {
-                $this->view->form = $this->getForm()->prepareSubForm($form);
-                return $this->render('addnewdevotee');
-            }
-           Zend_Debug::dump('ALL IS VALID');
         // Valid form!
         // Render information in a verification page
+        
         $this->view->info = $this->getSessionNamespace();
         $this->render('verification');
         //Clear the session data!
         Zend_Session::namespaceUnset($this->_namespace);
-        }
-    
         
     }
             
@@ -284,90 +263,90 @@ public function addnewdevoteeAction()
   $fullFilePath = $form->uplphoto->getFileName();
     
 $devotee_data = array( 
-'first_name'      =>$this->getRequest()->getPost('first_name') ,
-'middle_name'     =>$this->getRequest()->getPost('middle_name'),
-'last_name'       =>$this->getRequest()->getPost('last_name'),
-'do_birth'        =>$this->getRequest()->getPost('day').'-'.$this->getRequest()->getPost('month').'-'.$this->getRequest()->getPost('year'),
-'gender'          =>$this->getRequest()->getPost('gender'),
-'country_id'      =>$this->getRequest()->getPost('cc'),
-'center_id'       =>$this->getRequest()->getPost('center'),
-'counselor_id'    =>$this->getRequest()->getPost('counselor'),
-'mobile'          =>$this->getRequest()->getPost('mobile'),
-'email'           =>$this->getRequest()->getPost('email'),
-'pres_phone'      =>$this->getRequest()->getPost('phone_number'),
-'devotee_status'  =>$this->getRequest()->getPost('active_status'),
-'asram_status_id' =>$this->getRequest()->getPost('marital_status'),
-'mother_tongue_id'=>$this->getRequest()->getPost('mother_tongue'),
-'counselee_status'=>$this->getRequest()->getPost('counselee_status'),
-'blood_group'     =>$this->getRequest()->getPost('bld_grp'),
-'religion_id'     =>$this->getRequest()->getPost('previous_religion'),
-'native_place'    =>$this->getRequest()->getPost('native_place'),
-'native_state_id' =>$this->getRequest()->getPost('native_state'),
-'pres_add1'       =>$this->getRequest()->getPost('present_addline1'),
-'pres_add2'       =>$this->getRequest()->getPost('present_addline2'),
-'pres_locality_id'=>$this->getRequest()->getPost('present_locality'),
-'pres_pin'        =>$this->getRequest()->getPost('present_zip_code'),
-'pres_city_id'    =>$this->getRequest()->getPost('present_city'),
-'pres_state_id'   =>$this->getRequest()->getPost('present_state'),
-'pres_country_id' =>$this->getRequest()->getPost('present_country'),
-'pres_perm'       =>$this->getRequest()->getPost(''),
-'perm_add1'       =>$this->getRequest()->getPost('permenant_addline1'),
-'perm_add2'       =>$this->getRequest()->getPost('permenant_addline2'),
-'perm_locality_id'=>$this->getRequest()->getPost('permenant_locality'),
-'perm_pin'        =>$this->getRequest()->getPost('permenant_zip_code'),
-'perm_city_id'    =>$this->getRequest()->getPost('permenant_city'),
-'perm_state_id'   =>$this->getRequest()->getPost('permenant_state'),
-'perm_country_id' =>$this->getRequest()->getPost('permenant_country'),
-'perm_phone'      =>$this->getRequest()->getPost('phone_number'),
-'father_name'     =>$this->getRequest()->getPost('father_name'),
-'father_did'      =>$this->getRequest()->getPost(''),
-'mother_name'     =>$this->getRequest()->getPost('mother_name'),
-'mother_did'      =>$this->getRequest()->getPost(''),
-'spouse_name'     =>$this->getRequest()->getPost(''),
-'spouse_did'      =>$this->getRequest()->getPost(''),
-'do_marriage'     =>$this->getRequest()->getPost(''),
-'edu_cat_id'      =>$this->getRequest()->getPost(''),
-'education_qualification'   =>$this->getRequest()->getPost(''),
-'occupation_id'   =>$this->getRequest()->getPost(''),
-'designation'     =>$this->getRequest()->getPost(''),
-'off_name'        =>$this->getRequest()->getPost(''),
-'off_add1'        =>$this->getRequest()->getPost(''),
-'off_add2'        =>$this->getRequest()->getPost(''),
-'off_locality_id' =>$this->getRequest()->getPost(''),
-'off_pin'         =>$this->getRequest()->getPost(''),
-'off_city_id'     =>$this->getRequest()->getPost(''),
-'off_state_id'    =>$this->getRequest()->getPost(''),
-'off_country_id'  =>$this->getRequest()->getPost(''),
-'off_phone'       =>$this->getRequest()->getPost(''),
-'merits'          =>$this->getRequest()->getPost(''),
-'skill_set'       =>$this->getRequest()->getPost(''),
-'intro_by'        =>$this->getRequest()->getPost(''),
-'intro_year'      =>$this->getRequest()->getPost(''),
-'intro_center'    =>$this->getRequest()->getPost(''),
-'remarks'         =>$this->getRequest()->getPost(''),
-'do_deceased'     =>$this->getRequest()->getPost(''),
-'counselee_status'=>$this->getRequest()->getPost(''),
-'pics'            =>$fullFilePath, this will give you the file name now you have to rename it then it will be inserted into the database
-'user_id'         =>$this->getRequest()->getPost(''),
-'iys'             =>$this->getRequest()->getPost(''),
-'cong'            =>$this->getRequest()->getPost(''),
-'spiritualname_id'=>$this->getRequest()->getPost(''),
-'isgurukuli'      =>$this->getRequest()->getPost(''),
-'gurukulname'     =>$this->getRequest()->getPost(''),
-'isspousespdisp'  =>$this->getRequest()->getPost(''),
-'isactive'        =>$this->getRequest()->getPost(''),
-'local_version_status' =>$this->getRequest()->getPost(''),
-'local_version_do_modify'   =>$this->getRequest()->getPost(''),
-'modified'        =>$this->getRequest()->getPost(''),
-'pan'             =>$this->getRequest()->getPost(''),
-'receipt_name'    =>$this->getRequest()->getPost(''),
-'entered_date'    =>$this->getRequest()->getPost(''),
-'entered_by_uid'  =>$this->getRequest()->getPost(''),
-'dolm'               =>$this->getRequest()->getPost(''),
-'modibyuid'         =>$this->getRequest()->getPost(''),
-'verified'          =>$this->getRequest()->getPost(''),
-'do_verify'         =>$this->getRequest()->getPost(''),
-'verified_by_uid'   =>$this->getRequest()->getPost('')
+                    'first_name'      =>$this->getRequest()->getPost('first_name') ,
+                    'middle_name'     =>$this->getRequest()->getPost('middle_name'),
+                    'last_name'       =>$this->getRequest()->getPost('last_name'),
+                    'do_birth'        =>$this->getRequest()->getPost('day').'-'.$this->getRequest()->getPost('month').'-'.$this->getRequest()->getPost('year'),
+                    'gender'          =>$this->getRequest()->getPost('gender'),
+                    'country_id'      =>$this->getRequest()->getPost('cc'),
+                    'center_id'       =>$this->getRequest()->getPost('center'),
+                    'counselor_id'    =>$this->getRequest()->getPost('counselor'),
+                    'mobile'          =>$this->getRequest()->getPost('mobile'),
+                    'email'           =>$this->getRequest()->getPost('email'),
+                    'pres_phone'      =>$this->getRequest()->getPost('phone_number'),
+                    'devotee_status'  =>$this->getRequest()->getPost('active_status'),
+                    'asram_status_id' =>$this->getRequest()->getPost('marital_status'),
+                    'mother_tongue_id'=>$this->getRequest()->getPost('mother_tongue'),
+                    'counselee_status'=>$this->getRequest()->getPost('counselee_status'),
+                    'blood_group'     =>$this->getRequest()->getPost('bld_grp'),
+                    'religion_id'     =>$this->getRequest()->getPost('previous_religion'),
+                    'native_place'    =>$this->getRequest()->getPost('native_place'),
+                    'native_state_id' =>$this->getRequest()->getPost('native_state'),
+                    'pres_add1'       =>$this->getRequest()->getPost('present_addline1'),
+                    'pres_add2'       =>$this->getRequest()->getPost('present_addline2'),
+                    'pres_locality_id'=>$this->getRequest()->getPost('present_locality'),
+                    'pres_pin'        =>$this->getRequest()->getPost('present_zip_code'),
+                    'pres_city_id'    =>$this->getRequest()->getPost('present_city'),
+                    'pres_state_id'   =>$this->getRequest()->getPost('present_state'),
+                    'pres_country_id' =>$this->getRequest()->getPost('present_country'),
+                    'pres_perm'       =>$this->getRequest()->getPost(''),
+                    'perm_add1'       =>$this->getRequest()->getPost('permenant_addline1'),
+                    'perm_add2'       =>$this->getRequest()->getPost('permenant_addline2'),
+                    'perm_locality_id'=>$this->getRequest()->getPost('permenant_locality'),
+                    'perm_pin'        =>$this->getRequest()->getPost('permenant_zip_code'),
+                    'perm_city_id'    =>$this->getRequest()->getPost('permenant_city'),
+                    'perm_state_id'   =>$this->getRequest()->getPost('permenant_state'),
+                    'perm_country_id' =>$this->getRequest()->getPost('permenant_country'),
+                    'perm_phone'      =>$this->getRequest()->getPost('phone_number'),
+                    'father_name'     =>$this->getRequest()->getPost('father_name'),
+                    'father_did'      =>$this->getRequest()->getPost(''),
+                    'mother_name'     =>$this->getRequest()->getPost('mother_name'),
+                    'mother_did'      =>$this->getRequest()->getPost(''),
+                    'spouse_name'     =>$this->getRequest()->getPost(''),
+                    'spouse_did'      =>$this->getRequest()->getPost(''),
+                    'do_marriage'     =>$this->getRequest()->getPost(''),
+                    'edu_cat_id'      =>$this->getRequest()->getPost(''),
+                    'education_qualification'   =>$this->getRequest()->getPost(''),
+                    'occupation_id'   =>$this->getRequest()->getPost(''),
+                    'designation'     =>$this->getRequest()->getPost(''),
+                    'off_name'        =>$this->getRequest()->getPost(''),
+                    'off_add1'        =>$this->getRequest()->getPost(''),
+                    'off_add2'        =>$this->getRequest()->getPost(''),
+                    'off_locality_id' =>$this->getRequest()->getPost(''),
+                    'off_pin'         =>$this->getRequest()->getPost(''),
+                    'off_city_id'     =>$this->getRequest()->getPost(''),
+                    'off_state_id'    =>$this->getRequest()->getPost(''),
+                    'off_country_id'  =>$this->getRequest()->getPost(''),
+                    'off_phone'       =>$this->getRequest()->getPost(''),
+                    'merits'          =>$this->getRequest()->getPost(''),
+                    'skill_set'       =>$this->getRequest()->getPost(''),
+                    'intro_by'        =>$this->getRequest()->getPost(''),
+                    'intro_year'      =>$this->getRequest()->getPost(''),
+                    'intro_center'    =>$this->getRequest()->getPost(''),
+                    'remarks'         =>$this->getRequest()->getPost(''),
+                    'do_deceased'     =>$this->getRequest()->getPost(''),
+                    'counselee_status'=>$this->getRequest()->getPost(''),
+                    'pics'            =>$fullFilePath, this will give you the file name now you have to rename it then it will be inserted into the database
+                    'user_id'         =>$this->getRequest()->getPost(''),
+                    'iys'             =>$this->getRequest()->getPost(''),
+                    'cong'            =>$this->getRequest()->getPost(''),
+                    'spiritualname_id'=>$this->getRequest()->getPost(''),
+                    'isgurukuli'      =>$this->getRequest()->getPost(''),
+                    'gurukulname'     =>$this->getRequest()->getPost(''),
+                    'isspousespdisp'  =>$this->getRequest()->getPost(''),
+                    'isactive'        =>$this->getRequest()->getPost(''),
+                    'local_version_status' =>$this->getRequest()->getPost(''),
+                    'local_version_do_modify'   =>$this->getRequest()->getPost(''),
+                    'modified'        =>$this->getRequest()->getPost(''),
+                    'pan'             =>$this->getRequest()->getPost(''),
+                    'receipt_name'    =>$this->getRequest()->getPost(''),
+                    'entered_date'    =>$this->getRequest()->getPost(''),
+                    'entered_by_uid'  =>$this->getRequest()->getPost(''),
+                    'dolm'               =>$this->getRequest()->getPost(''),
+                    'modibyuid'         =>$this->getRequest()->getPost(''),
+                    'verified'          =>$this->getRequest()->getPost(''),
+                    'do_verify'         =>$this->getRequest()->getPost(''),
+                    'verified_by_uid'   =>$this->getRequest()->getPost('')
 );
 */            
         
@@ -384,9 +363,9 @@ $devotee_data = array(
      //  $d->insert($devotee_data);
      //  echo "Photo Uploaded";
      //  $form->populate($formData);
-       //$this->_redirect('devotees/listdevotees');                
+     //  $this->_redirect('devotees/listdevotees');                
     //    exit;
-    // } else{
+    //  } else{
     //           $form->getErrors();
     //           $form->isValid($formData);
      //}
