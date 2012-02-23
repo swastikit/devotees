@@ -10,7 +10,7 @@ class Application_Model_DbTable_MstCenter extends Zend_Db_Table_Abstract
                             ->order(array('name'));
         }else if($option=='counselor'){
             $select->from(array('mst_center'), array('id', 'name'))
-                            ->where('isactive = ?', 'Y')
+                            ->Where('isactive = ?', 'Y')
                             ->Where('id in (SELECT x.center_id FROM devotee x where x.did in (select y.did from mst_counselor y))')
                             ->order(array('name'));
         }else if($option=='mentor'){
