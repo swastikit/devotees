@@ -54,16 +54,28 @@ class Application_Model_DbTable_Devotee extends Zend_Db_Table_Abstract
     did, name, searchname, pic,center
     */
     public function listIndentificationInfo($like){
-        $select = $this->_db->select();
-   		$select->from(array('d'=>'devotee'),array('d.did', 'd.initiated_name','d.first_name','d.middle_name','d.last_name', 'd.search_name', 'd.pics', 'd.devotee_status'))	
-                ->joinLeft(array('c'=>'mst_center'), 'd.center_id = c.id', array('centername'=>'c.name'))
-                ->where($this->_db->quoteInto('d.encoded_search_name LIKE ?', Rgm_Basics::encodeDiacritics($like) . '%'))
-                ->where($this->_db->quoteInto('d.contact_type LIKE ?','I'))
-                ->order('d.search_name ASC')   		       
-                ->limit(20);
-        $results = $this->getAdapter()->fetchAll($select);
+        $search = explode(" ", $like);
+        $sqlWhere="";
+        $sql = "SELECT d.did,d.first_name,d.middle_name,d.last_name,d.organization_name,d.search_name,c.name centername, d.pics"
+                . " FROM devotee AS d"
+                . " Left Join mst_center AS c ON d.center_id = c.id";
+                
+        $sqlWhere=" where d.contact_type='I' and d.isactive='Y' and d.did<>1";
+        /*
+        $tmp="";
+        for($i=0;$i <count($search);$i++){
+            $tmp = $tmp . ($tmp==""?"":" OR ") . $this->_db->quoteInto("d.encoded_search_name LIKE ?", Rgm_Basics::encodeDiacritics($search[$i]) ."%"); 
+        }
+        if($tmp!=""){
+            $sqlWhere = $sqlWhere . " and (" . $tmp . ")";
+        }
+        */
+        $sqlWhere = $sqlWhere . " AND " . $this->_db->quoteInto("d.encoded_search_name LIKE ?", Rgm_Basics::encodeDiacritics($search[$i]) ."%");
+        $sql = $sql . $sqlWhere . " order by d.encoded_search_name LIMIT 20";
+        $results = $this->getAdapter()->fetchAll($sql);
         return $results;
     }
+
         
 /*    
  Add a new devotee
