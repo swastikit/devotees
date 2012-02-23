@@ -16,11 +16,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->headTitle('Radha Gopinath Mandir');
 
     }
-    protected function _initSessionstart()
-    {
-        //$this->bootstrap('session');
-        //Zend_Session::start();
-    }
+    protected function _initSessions() {
+        $this->bootstrap('session');
+    }    
     protected function _initAppAutoload()
     {
         $loader = new Zend_Application_Module_Autoloader(array('namespace' => 'Application','basePath' => dirname(__file__), ));
