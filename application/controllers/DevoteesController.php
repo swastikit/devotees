@@ -29,7 +29,7 @@ public function listdevoteesAction()
     $paginator->setCurrentPageNumber($page);
     $this->view->paginator = $paginator;
     //FOR NUMBER RECORDS FOUND----------------------------------
-    $num_rec_found = $devotees->getNumberofRecords();
+    $num_rec_found = $devotees->getNumberOfRecords();
     $this->view->number_of_records_found = $num_rec_found;
     //FOR LIST OF COUNSELORS------------------------------------
     $counselors = new Application_Model_DbTable_MstCounselor();
