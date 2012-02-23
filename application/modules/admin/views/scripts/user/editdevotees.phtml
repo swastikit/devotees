@@ -9,19 +9,8 @@
         </div>
         <div class="scrolDivList" style="height:500px!important;">
             <ul id="selected_dids">
-                <li class="empty">No photos selected.</li>
+                <li class="empty">No devotees selected.</li>
             </ul>
-            <?php if(count($this->list)): ?>
-            <ol id="olSel">
-            <?php $c=0; foreach ($this->list as $u): ?>
-                <?php if($u['checked']=='checked'): ?>
-                <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><?php echo "$c.  " . $this->escape($u['name']) . ($u['is_active']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
-                <?php endif;?>
-            <?php endforeach; ?>
-            </ol>
-            <?php else: ?>
-            <?php echo 'No devotee is assigned to this user.';?>
-            <?php endif; ?>
         </div>
     </div>
     <div style="text-align:right;margin-top:6px;">
@@ -46,11 +35,30 @@
         .result{
             border-bottom: 1px solid #F6F6F6;
         }
+        .liSelectedItem{
+            position: relative;
+            width: 240px;
+            float: left;
+            margin:2px;
+            border: 1px solid #F6F6F6;
+        }
+        .liSelectedItem img{
+            float: left;
+            width: 45px;height: 60px;
+            margin-right:2px;
+        }
+        .liSelectedItem .btnTopRightCorner{
+            position: absolute;top:1px;right:2px;
+            color:white;background: black;
+            line-height:14px;width:14px;
+            text-align: center;
+            font-size:12px;
+        }
     </style>
 </div>
 <div class="clearfix"></div>
 <script>
-YUI().use('autocomplete', 'autocomplete-highlighters', function (Y) {
+YUI().use('autocomplete', 'autocomplete-highlighters','json-stringify','io-base','io-form', function (Y) {
     var inputNode  = Y.one('#seldevotee');
     var myUrl=document.URL;
     myUrl=myUrl.substring(0,myUrl.indexOf("/",7));
@@ -72,12 +80,11 @@ YUI().use('autocomplete', 'autocomplete-highlighters', function (Y) {
                 //alert(result.raw.id);
                 return '<div class="result">' +
                     '<img class="photoInAc" src="' + myUrl + '/photos/thumbs/' + result.raw.pics + '" alt="thumbnail">' +
-                    '<span class="title">' + result.highlighted + '<br>' + result.raw.centername + '</span>' +
+                    '<span class="title">' + result.highlighted + '<br>' + result.raw.centername + ' (did: ' + result.raw.did+ ')</span>' +
                     '</div>';
             })
         }
     });
-    var photosNode = Y.one('#selected_dids');
     inputNode.ac.on('query', function (e) {
         Y.one('#search').set('innerHTML','Searching...');
     }); 
@@ -85,30 +92,74 @@ YUI().use('autocomplete', 'autocomplete-highlighters', function (Y) {
         Y.one('#search').set('innerHTML','');
     }); 
 
-
-    // After a photo is selected, add it to the collection.
+    var selected_dids = Y.one('#selected_dids');
+    selected_dids.delegate('click', removeItem, '.btnTopRightCorner');
+    function removeItem(e){
+        this.ancestor('li').remove();
+    }
     inputNode.ac.on('select', function (e) {
         var result = e.result;
-    
-        // Prevent the default select handler so we can provide our own selection
-        // behavior instead.
         e.preventDefault();
-    
         inputNode.select();
         inputNode.ac.hide();
-    
-        // Remove the 'No photos selected' message if it exists.
-        photosNode.all('.empty').remove();
-    
-        // Append a new list item containing the selected photo.
-        photosNode.append(
-            '<li class="photo">' +
-                '<img src="' + myUrl + '/photos/thumbs/' + result.raw.pics +
-                '" alt="' + result.raw.search_name + '" title="' + result.raw.search_name + '">' +
-            '</li>'
-        );
+        selected_dids.all('.empty').remove();
+        result.raw.myUrl=myUrl;
+        var TEMPLATE_LI = "<li class='liSelectedItem'>"
+        + "<img src='{myUrl}/photos/thumbs/{pics}' alt='{search_name}' title='{search_name}'>"
+        + "<a class='btnTopRightCorner' href='javascript:void(0)' title='Remove this devotee.'>X</a>"
+        + "{search_name}<br>did : <span class='clsDID'>{did}</span><br>{centername}"                    
+        + "</li>";
+        var html = Y.Lang.sub(TEMPLATE_LI, result.raw);
+        selected_dids.append(html);
     });//Input node closed  
-   
+    Y.one('#btnSavePopUp').on('click',saveDids);
+    function saveDids(){
+        var dids = [];
+        dids.push(0);//To avoid null
+        Y.all('#selected_dids .clsDID').each(function (e) {dids.push(e.get('innerHTML'));});
+        var jSelectedIds=Y.JSON.stringify(dids);
+        data='jSelectedIds=' + jSelectedIds;
+        var cfg = {
+            method: 'POST',
+            data:data
+        };
+        var sUrl = "/admin/user/editmoreinfo/info/<?php echo $this->info ?>/id/<?php echo $this->id ?>/do/SAVE";
+        pleaseWait.show();
+        var request = Y.io(sUrl, cfg);
+    }
+    var handleFailure = function(ioId, o){
+    	pleaseWait.hide();
+    	if(o.responseText !== undefined){
+    		var s = "Server Problem";
+    		s += "\nTransaction id: " + ioId;
+    		s += "\nHTTP status: " + o.status;
+    		s += "\nStatus code message: " + o.statusText;
+    		s += "\nResponseText: " + o.responseText;
+    		alert(s);
+            Y.one('#error').set('innerHTML',s);
+    	}
+    };
+    var handleSuccess = function(ioId, o){
+        pleaseWait.hide();
+        if(o.responseText !== undefined){
+            var res=eval('(' + o.responseText + ')');
+            if(res.htmlBody!== undefined && res.htmlBody!= ''){
+                Y.one('#popUpContent').set('innerHTML',res.htmlBody);
+                p.set("centered",true);
+                responseDiv = document.getElementById('popUpContent');
+                scripts = responseDiv.getElementsByTagName('script');
+                eval(scripts[0].innerHTML);
+            }
+            if(res.htmlBodyBg!== undefined && res.htmlBodyBg!= ''){
+                Y.one('#tbDevotees').set('innerHTML',res.htmlBodyBg);
+            }
+            if(res.message!== undefined && res.message!= ''){
+                Y.one('#popUpMessage').set('innerHTML',res.message);
+            }
+        }
+    }
+    Y.on('io:success', handleSuccess);
+    Y.on('io:failure', handleFailure);
 });//YUI closed
 </script>
  

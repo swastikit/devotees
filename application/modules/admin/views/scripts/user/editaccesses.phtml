@@ -135,7 +135,6 @@
         var handleSuccess = function(ioId, o){
             pleaseWait.hide();
             if(o.responseText !== undefined){
-                Y.one('#error').set('innerHTML',o.responseText);
                 var res=eval('(' + o.responseText + ')');
                 if(res.htmlBody!== undefined && res.htmlBody!= ''){
                     Y.one('#popUpContent').set('innerHTML',res.htmlBody);

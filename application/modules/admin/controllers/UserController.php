@@ -228,21 +228,21 @@ class Admin_UserController extends Zend_Controller_Action
         /**********************DEVOTEES ASSIGNED TO THE USER******************************/
         }else if($info=='DEVOTEES'){
             $do = $this->_getParam('do');
-            if($do==null){ //Display the edit DB page
-                $list=$u->getDbList($id,'ALL');
+            if($do==null){ //Display the edit UserVsDevotee page
+                $list=$u->getDevoteeList($id,'CHECKED');
                 $this->view->list=$list;
                 $htmlString = $this->view->render('user/editdevotees.phtml');
             }else if($do=='SAVE'){
                 $jSelectedIds=$this->_getParam('jSelectedIds');
-                $dbIds=Zend_Json::decode($jSelectedIds);
-                if($dbIds != null){
+                $DIDs=Zend_Json::decode($jSelectedIds);
+                if($DIDs != null){
                     $userModel=new Admin_Model_User();
-                    $message=$userModel->updateDbList($id, $dbIds);
+                    $message=$userModel->updateDevoteesList($id, $DIDs);
                     if($message==''){//Successfull
                         $message='Successfully updated.';   
                         //Refresh the background page
-                        $this->view->dbList=$u->getDbList($id,'CHECKED');
-                        $htmlStringBg = $this->view->render('user/viewdbs.phtml');
+                        $this->view->devoteeList=$u->getDevoteeList($id,'CHECKED');
+                        $htmlStringBg = $this->view->render('user/viewdevotee.ajax.phtml');
                     }
                 }else{
                     $message='Error:: list of selected database found blank.';

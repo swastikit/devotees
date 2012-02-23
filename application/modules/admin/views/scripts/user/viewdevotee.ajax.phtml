@@ -1,11 +1,11 @@
 <div class="clearfix"></div>
 <div class="contInTbVw">
-    <h2>Actions</h2>
+    <h2>Devotees</h2>
     <span class="linkAction"><a href="javascript:void(0)" onclick="RG.editMoreInfo(<?php echo $this->escape($this->id);?>,'DEVOTEES');">Edit</a></span>
     <div class="lstInTbVw">
-        <?php if(count($this->actionList)): ?>
+        <?php if(count($this->devoteeList)): ?>
         <ol>
-        <?php $c=0; foreach ($this->actionList as $u): ?>
+        <?php $c=0; foreach ($this->devoteeList as $u): ?>
             <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><?php echo "$c.  " . $this->escape($u['module']) . '-->' . $this->escape($u['name']) . ' (' . $this->escape($u['description']) . ')' . ($u['is_active']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
         <?php endforeach; ?>
         </ol>
