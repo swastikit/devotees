@@ -70,7 +70,7 @@ class Application_Model_DbTable_Devotee extends Zend_Db_Table_Abstract
             $sqlWhere = $sqlWhere . " and (" . $tmp . ")";
         }
         */
-        $sqlWhere = $sqlWhere . " AND " . $this->_db->quoteInto("d.encoded_search_name LIKE ?", Rgm_Basics::encodeDiacritics($search[$i]) ."%");
+        $sqlWhere = $sqlWhere . " AND " . $this->_db->quoteInto("d.encoded_search_name LIKE ?", Rgm_Basics::encodeDiacritics($like) ."%");
         $sql = $sql . $sqlWhere . " order by d.encoded_search_name LIMIT 20";
         $results = $this->getAdapter()->fetchAll($sql);
         return $results;
