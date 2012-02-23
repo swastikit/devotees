@@ -72,14 +72,14 @@ class DevoteesController extends Zend_Controller_Action
     $this->view->selStatusIds = array('A','I','E');
 }
 
-/* For Ajax Use Called by Counselor Autocomplete Combobox */
-public function listKeyValueCounselorAction(){
-    $search=$this->getRequest()->getParam('s');
-    $con=new Application_Model_DbTable_MstCounselor();
-    $rs = new stdClass;
-    $rs->result = $con->listIdNames($search);
-    $this->_helper->json($rs);
-}
+    /* For Ajax Use Called by Counselor Autocomplete Combobox */
+    public function listKeyValueCounselorAction(){
+        $search=$this->getRequest()->getParam('s');
+        $con=new Application_Model_DbTable_MstCounselor();
+        $rs = new stdClass;
+        $rs->result = $con->listIdNames($search);
+        $this->_helper->json($rs);
+    }
 
 //-----------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ public function listKeyValueCounselorAction(){
     public function formIsValid(){
         $data = array();
         foreach ($this->getSessionNamespace() as $key => $info) {
-            $data[$key] = $info;
+            $data[$key] = $info[$key]; 
         }
         return $this->getForm()->isValid($data);
     }
@@ -212,12 +212,21 @@ public function listKeyValueCounselorAction(){
     public function addnewdevoteeAction(){
         // Either re-display the current page, or grab the "next"
         // (first) sub form
+            
             if (!$form = $this->getCurrentSubForm()) {
             $form = $this->getNextSubForm();
+            Zend_Debug::dump('I am at step I');
             }
-            Zend_Debug::dump('abcd jldas fldjsalf dslajfldsajlfjdslajkl');
+            
+            if($form){
+            Zend_Debug::dump('I am at step II');
             $form = $this->getForm()->prepareSubForm($form);
             $this->view->form = $form;
+            }
+            
+            //if(!$form){
+              //return  $this->render('verification');
+            //}
             
             }
     
@@ -226,30 +235,42 @@ public function listKeyValueCounselorAction(){
     }
     
     public function processAction(){
-        Zend_Debug::dump('OK1');
-        if (!$form = $this->getCurrentSubForm()) {
-            Zend_Debug::dump('OK2');
+ Zend_Debug::dump('I am at step III');
+        if (!$form = $this->getCurrentSubForm()){
+            Zend_Debug::dump('I am at step IV');
             return $this->_forward('addnewdevotee');
         }
- Zend_Debug::dump('OK3');
+ Zend_Debug::dump('I am at step V');
         if (!$this->subFormIsValid($form,$this->getRequest()->getPost())) {
-            Zend_Debug::dump('OK4');    
+            Zend_Debug::dump('I am at step VI');    
             $this->view->form = $this->getForm()->prepareSubForm($form);
             return $this->render('addnewdevotee');
         }
- Zend_Debug::dump('OK5');
+/*Zend_Debug::dump('OK5');
         if (!$this->formIsValid()) {
             Zend_Debug::dump($this->getForm()->getErrors());
             $form = $this->getNextSubForm();
             $this->view->form = $this->getForm()->prepareSubForm($form);
-            return $this->render('addnewdevotee');
+            return $this->render('');
         }
-        
-        Zend_Debug::dump('ALl Valid');
+*/        
+        if (!$this->formIsValid()) {
+            Zend_Debug::dump('I am at step VII');
+            $form = $this->getNextSubForm();
+            if ($form) {
+                $this->view->form = $this->getForm()->prepareSubForm($form);
+                return $this->render('addnewdevotee');
+            }
+           Zend_Debug::dump('ALL IS VALID');
         // Valid form!
         // Render information in a verification page
         $this->view->info = $this->getSessionNamespace();
         $this->render('verification');
+        //Clear the session data!
+        Zend_Session::namespaceUnset($this->_namespace);
+        }
+    
+        
     }
             
             
