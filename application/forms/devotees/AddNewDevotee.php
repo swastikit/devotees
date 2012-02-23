@@ -9,26 +9,26 @@ class Application_Form_Devotees_AddNewDevotee extends Zend_Form
          ->setAttrib('id','addnewdevotee')
          ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
 
-//SUB FORM for Preliminary Information aboout Devotee
+    //SUB FORM for Preliminary Information aboout Devotee
 
 $SubForm_BasicInfo = new Zend_Form_SubForm();
-    
-    $DevPic = new Zend_Form_Element_File('uplphoto');
-    $DevPic ->setLabel('Upload Your Photo Here')
-            ->setName('uplphoto');
-    $path     = 'photos/';
-    $DevPic ->setDestination($path) //->setMaxFileSize(2097152)
-            ->addValidator('Size',true,array('max'=>'4096000','messages'=>'The maximum permitted image file size is %max% selected image file size is %size%.'))
-            ->addValidator('Extension',true,array('jpg,jpeg', 
-                                                  'messages' => 'photo with only jpg, jpeg or gif format 
-                                                                 are accepted for uploading profile.'));
-            //->setRequired(true)
-            //->addValidator('NotEmpty');
         
-//->setValidators(array('Size'=>array('min' => 20,'max' =>2097152),'Count' =>array('min' => 1,'max' => 3)))
-//->addValidator('IsImage');
-//to disable the viewrenderer use 
-//$this->_helper->viewRenderer->setNoRender(true);
+        $DevPic = new Zend_Form_Element_File('uplphoto');
+        $DevPic ->setLabel('Upload Your Photo Here')
+                ->setName('uplphoto');
+        $path     = 'photos/';
+        $DevPic ->setDestination($path) //->setMaxFileSize(2097152)
+                ->addValidator('Size',true,array('max'=>'4096000','messages'=>'The maximum permitted image file size is %max% selected image file size is %size%.'))
+                ->addValidator('Extension',true,array('jpg,jpeg', 
+                                                      'messages' => 'photo with only jpg, jpeg or gif format 
+                                                                     are accepted for uploading profile.'));
+                //->setRequired(true)
+                //->addValidator('NotEmpty');
+            
+    //->setValidators(array('Size'=>array('min' => 20,'max' =>2097152),'Count' =>array('min' => 1,'max' => 3)))
+    //->addValidator('IsImage');
+    //to disable the viewrenderer use 
+    //$this->_helper->viewRenderer->setNoRender(true);
     
     $Fname = new Zend_Form_Element_Text('first_name');
     $Fname ->setLabel('First Name*')
@@ -669,11 +669,8 @@ $SubForm_ServicesRendered_Info->addElements(array($ServicesRendered,$ServicesInt
                                      'services_info'   => $SubForm_ServicesRendered_Info
                                     ));
 
-
-
-
-//$this->addElements(array($DevPic,$Fname,$Mname,$Lname,$Day,$Month,$Year,$Gender,$CountryCode,$Mobile,$PhoneNumber,$Email,$Center,$Counselor,$Mentor,$CounsellingStatus,$ActiveStatus,$MotherTongue,$BldGrp,$PrevReligion,$LanguagesKnown,$NativePlace,$NativeState,$MaritalStatus));
   }
+  
 /*
  *
  * Prepare a sub form for display
@@ -681,20 +678,23 @@ $SubForm_ServicesRendered_Info->addElements(array($ServicesRendered,$ServicesInt
  * @param  string|Zend_Form_SubForm $spec
  * @return Zend_Form_SubForm
  */
+ 
     public function prepareSubForm($spec)
     {
         if (is_string($spec)) {
             $subForm = $this->{$spec};
-        } elseif ($spec instanceof Zend_Form_SubForm) {
+        } 
+        
+        elseif ($spec instanceof Zend_Form_SubForm) {
             $subForm = $spec;
-        } else {
-            throw new Exception('Invalid argument passed to ' .
-                                __FUNCTION__ . '()');
+        } 
+        
+        else {
+            throw new Exception('Invalid argument passed to ' .__FUNCTION__ . '()');
         }
         $this->setSubFormDecorators($subForm)
              ->addSubmitButton($subForm)
              ->addSubFormActions($subForm);
-             
         return $subForm;
     }
 
@@ -703,7 +703,7 @@ $SubForm_ServicesRendered_Info->addElements(array($ServicesRendered,$ServicesInt
  * Add form decorators to an individual sub form
  *
  * @param  Zend_Form_SubForm $subForm
- * @return My_Form_Registration
+ * @return Application_Form_Devotees_AddNewDevotee
  */
     
     public function setSubFormDecorators(Zend_Form_SubForm $subForm)
@@ -716,13 +716,15 @@ $SubForm_ServicesRendered_Info->addElements(array($ServicesRendered,$ServicesInt
         ));
         return $this;
     }
+    
 /*
  *
  * Add a submit button to an individual sub form
  *
  * @param  Zend_Form_SubForm $subForm
- * @return My_Form_Registration
+ * @return Application_Form_Devotees_AddNewDevotee
  */
+ 
     public function addSubmitButton(Zend_Form_SubForm $subForm)
     {
         $subForm->addElement(new Zend_Form_Element_Submit('save',array('label'    => 'Save and continue',
@@ -733,14 +735,14 @@ $SubForm_ServicesRendered_Info->addElements(array($ServicesRendered,$ServicesInt
         return $this;
     }
     
-    
 /*
  *
  * Add action and method to sub form
  *
  * @param  Zend_Form_SubForm $subForm
- * @return My_Form_Registration
+ * @return Application_Form_Devotees_AddNewDevotee
  */
+ 
     public function addSubFormActions(Zend_Form_SubForm $subForm)
     {
         $subForm->setAction('/devotees/process')
