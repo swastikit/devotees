@@ -88,7 +88,7 @@ dl.table-display
     <div id="tbMentorsx" style="display: none;"><?php include 'viewmentors.ajax.phtml' ?></div>
     <div id="tbGurusx" style="display: none;"><?php include 'viewgurus.ajax.phtml' ?></div>
     <div id="tbActionsx" style="display: none;"><?php include 'viewaccesses.ajax.phtml' ?></div>
-    <div id="tbDevoteex" style="display: none;"><?php include 'viewdevotee.ajax.phtml' ?></div>
+    <div id="tbDevoteesx" style="display: none;"><?php include 'viewdevotee.ajax.phtml' ?></div>
 </div>
 <div class="clearfix"></div>
 <div id="popUpHid" style="display: none;">
@@ -172,7 +172,7 @@ dl.table-display
             var tbMentorsx=Y.one('#tbMentorsx').get('innerHTML');
             var tbGurusx=Y.one('#tbGurusx').get('innerHTML');
             var tbActionsx=Y.one('#tbActionsx').get('innerHTML');
-            var tbDevoteex=Y.one('#tbDevoteex').get('innerHTML');
+            var tbDevoteesx=Y.one('#tbDevoteesx').get('innerHTML');
     		var tabview = new Y.TabView({
     	        children: [{            
     	            label: 'Databases',
@@ -194,7 +194,7 @@ dl.table-display
     	            content: '<div id="tbGurus" style="height:100%;">' + tbGurusx + '</div>'
     	        }, {
     	            label: 'Devotees',
-    	            content: '<div id="tbDevoteex" style="height:100%;">' + tbDevoteex + '</div>'
+    	            content: '<div id="tbDevotees" style="height:100%;">' + tbDevoteesx + '</div>'
                 }],
                 /*
     	        on:{

@@ -396,4 +396,49 @@ class Admin_Model_User extends Zend_Db_Table_Abstract
         }
         return $return;
     }
+    /*
+    ----------------------------------------------------------------------------------------------------------
+    $data format = array(0 =>1,1=>122,3=>343,..=>..,..))
+    ----------------------------------------------------------------------------------------------------------
+    */
+    public function updateDevoteesList($id,$data){
+        $return="";
+        $bootstrap = Zend_Controller_Front::getInstance()->getParam("bootstrap");
+        $db = $bootstrap->getPluginResource('db')->getDbAdapter();
+        $db->beginTransaction();
+        $mstUser=new Application_Model_DbTable_Mstuser();
+        $prevUser=$mstUser->getDevoteeList($id,'CHECKED');
+        $logObj = Zend_Json::encode($prevUser);
+        try {
+            if($data){
+                //-Delete Devotees-------------
+                $uVsDevotees=new Application_Model_DbTable_MstUserVsDevotee;
+                $where = $uVsDevotees->getAdapter()->quoteInto('user_id = ?', $id);
+                $uVsDevotees->delete($where);
+                //-Insert Now
+                foreach($data as $r){
+                    if($r!=0){
+                        $data = array(
+                            'user_id'   => $id,
+                            'did'   => $r
+                        );
+                        $uVsDevotees->insert($data); 
+                    }
+                }
+                Rgm_UserServices::log($id,'mst_user','Devotees list changed',$logObj);
+                $db->commit();
+                $return="";
+            }
+        } catch (Zend_Db_Adapter_Exception $e) {
+            $db->rollBack();
+            $return=$e->getMessages();
+        } catch (Zend_Exception $e) {
+            $db->rollBack();
+            $return=$e->getMessages();
+        } catch (Exception $e) {
+            $db->rollBack();
+            $return=$e->getMessages();
+        }
+        return $return;
+    }
 }
