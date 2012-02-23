@@ -17,7 +17,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     }
     protected function _initSessions() {
-        $this->bootstrap('session');
+        //$this->bootstrap('session');
     }    
     protected function _initAppAutoload()
     {

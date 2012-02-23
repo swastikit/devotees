@@ -329,9 +329,9 @@ class Admin_UserController extends Zend_Controller_Action
     */
     public function devoteelistAction(){
         $search=$this->getRequest()->getParam('s');
-        $con=new Application_Model_DbTable_MstCounselor();
+        $dev=new Application_Model_DbTable_Devotee();
         $rs = new stdClass;
-        $rs->result = $con->listIdNames($search);
+        $rs->result = $dev->listIndentificationInfo($search);
         $this->_helper->json($rs);
     }
     
