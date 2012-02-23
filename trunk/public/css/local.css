@@ -173,3 +173,25 @@
 .scrolDivBox .scrolDivList{
     overflow: auto;
 }
+/*--Admin/user/view/edit user */
+.liSelectedItem{
+    position: relative;
+    width: 240px;
+    float: left;
+    margin:2px;
+    border: 1px solid #F6F6F6;
+}
+.liSelectedItem img{
+    float: left;
+    width: 45px;height: 60px;
+    margin-right:2px;
+}
+.liSelectedItem .btnTopRightCorner{
+    position: absolute;top:1px;right:2px;
+    color:white;background: black;
+    line-height:14px;width:14px;
+    text-align: center;
+    font-size:12px;
+}
+
+

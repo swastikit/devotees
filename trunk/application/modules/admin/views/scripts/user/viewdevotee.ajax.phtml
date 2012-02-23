@@ -6,11 +6,14 @@
         <?php if(count($this->devoteeList)): ?>
         <ol>
         <?php $c=0; foreach ($this->devoteeList as $u): ?>
-            <li><div class="tabRowItems clearfix <?php echo ($c++%2==1)?'bg1':'bg2'?>"><?php echo "$c.  " . $this->escape($u['module']) . '-->' . $this->escape($u['name']) . ' (' . $this->escape($u['description']) . ')' . ($u['is_active']=='N'?' <label style="color:red">Inactive</label>':'');?></div></li>
+        <li class='liSelectedItem'>
+            <img src="<?php echo $this->baseUrl()?>/photos/thumbs/<?php echo $this->escape($u['pics'])?>" alt="<?php echo $this->escape($u['search_name'])?>" title="<?php echo $this->escape($u['search_name'])?>"/>
+            <?php echo $this->escape($u['search_name'])?><br/>did : <?php echo $this->escape($u['did'])?></span><br/><?php echo $this->escape($u['centername'])?>                    
+        </li>
         <?php endforeach; ?>
         </ol>
         <?php else: ?>
-        <?php echo 'No action is assigned to this user.';?>
+        <?php echo 'No devotees is assigned to this user.';?>
         <?php endif; ?>
     </div>
 </div>
