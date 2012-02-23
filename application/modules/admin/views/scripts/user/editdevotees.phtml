@@ -9,7 +9,17 @@
         </div>
         <div class="scrolDivList" style="height:500px!important;">
             <ul id="selected_dids">
-                <li class="empty">No devotees selected.</li>
+                <?php if(count($this->devoteeList)): ?>
+                <?php $c=0; foreach ($this->devoteeList as $u): ?>
+                <li class='liSelectedItem'>
+                    <img src="<?php echo $this->baseUrl()?>/photos/thumbs/<?php echo $this->escape($u['pics'])?>" alt="<?php echo $this->escape($u['search_name'])?>" title="<?php echo $this->escape($u['search_name'])?>"/>
+                    <a class='btnTopRightCorner' href='javascript:void(0)' title='Remove this devotee.'>X</a>
+                    <?php echo $this->escape($u['search_name'])?><br/>did : <span class='clsDID'><?php echo $this->escape($u['did'])?></span><br/><?php echo $this->escape($u['centername'])?>                    
+                </li>
+                <?php endforeach; ?>
+                <?php else: ?>
+                    <li class="empty">No devotees selected.</li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>
@@ -19,6 +29,7 @@
     <style>
         .yui3-aclist-content{
             width: 600px;
+            position: relative;
         }
         .yui3-aclist-item{
             float: left;
@@ -34,25 +45,6 @@
         }
         .result{
             border-bottom: 1px solid #F6F6F6;
-        }
-        .liSelectedItem{
-            position: relative;
-            width: 240px;
-            float: left;
-            margin:2px;
-            border: 1px solid #F6F6F6;
-        }
-        .liSelectedItem img{
-            float: left;
-            width: 45px;height: 60px;
-            margin-right:2px;
-        }
-        .liSelectedItem .btnTopRightCorner{
-            position: absolute;top:1px;right:2px;
-            color:white;background: black;
-            line-height:14px;width:14px;
-            text-align: center;
-            font-size:12px;
         }
     </style>
 </div>
@@ -75,9 +67,7 @@ YUI().use('autocomplete', 'autocomplete-highlighters','json-stringify','io-base'
         },
         */
         resultFormatter: function (query, results) {
-            //alert(query);
             return Y.Array.map(results, function (result) {
-                //alert(result.raw.id);
                 return '<div class="result">' +
                     '<img class="photoInAc" src="' + myUrl + '/photos/thumbs/' + result.raw.pics + '" alt="thumbnail">' +
                     '<span class="title">' + result.highlighted + '<br>' + result.raw.centername + ' (did: ' + result.raw.did+ ')</span>' +

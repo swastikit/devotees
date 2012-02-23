@@ -43,12 +43,14 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->id=$id;
         $this->view->u=$u->getBasicInfo($id);
         //ALL, CHECKED, UNCHECKED
+        
         $this->view->dbList=$u->getDbList($id,'CHECKED');
         $this->view->centerList=$u->getCenterList($id,'CHECKED');
         $this->view->actionList=$u->getActionList($id,'CHECKED');
         $this->view->mentorList=$u->getMentorList($id,'CHECKED');
         $this->view->counselorList=$u->getCounselorList($id,'CHECKED');
         $this->view->guruList=$u->getGuruList($id,'CHECKED');
+        $this->view->devoteeList=$u->getDevoteeList($id,'CHECKED');
     }
     public function editmoreinfoAction()
     {
@@ -229,8 +231,7 @@ class Admin_UserController extends Zend_Controller_Action
         }else if($info=='DEVOTEES'){
             $do = $this->_getParam('do');
             if($do==null){ //Display the edit UserVsDevotee page
-                $list=$u->getDevoteeList($id,'CHECKED');
-                $this->view->list=$list;
+                $this->view->devoteeList=$u->getDevoteeList($id,'CHECKED');
                 $htmlString = $this->view->render('user/editdevotees.phtml');
             }else if($do=='SAVE'){
                 $jSelectedIds=$this->_getParam('jSelectedIds');

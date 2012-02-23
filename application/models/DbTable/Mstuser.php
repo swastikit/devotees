@@ -404,20 +404,16 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
         }
         return $results;
     }
-    //Returns the list of Devotees assigned to this user 
-    //$option == ALL=all; checked=only assigned to this user; unchecked=those which are not assigned to this user.
+    //Returns the list of Devotees assigned to this user
+    //$option is irrlevent 
     public function getDevoteeList($id,$option,$page=null){
-        $sqlChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_counselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.counselor_id FROM  mst_user_vs_counselor u WHERE u.user_id=$id)";
-        $sqlUnChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_counselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.counselor_id FROM  mst_user_vs_counselor u WHERE u.user_id=$id)";
-        $sqlAll = $sqlChecked . " UNION ALL " . $sqlUnChecked;
-        $sqlOrderBy = " ORDER BY encoded_search_name ASC";
-        if($option=='ALL'){
-            $results = $this->getAdapter()->fetchAll($sqlAll . $sqlOrderBy);
-        }else if($option=='CHECKED'){
-            $results = $this->getAdapter()->fetchAll($sqlChecked . $sqlOrderBy);
-        }else if($option=='UNCHECKED'){
-            $results = $this->getAdapter()->fetchAll($sqlUnChecked . $sqlOrderBy);
-        }
+        $sqlWhere="";
+        $sql = "SELECT d.did,d.first_name,d.middle_name,d.last_name,d.organization_name,d.search_name,c.name centername, d.pics"
+                . " FROM devotee AS d"
+                . " Left Join mst_center AS c ON d.center_id = c.id";
+        $sqlWhere=" where d.contact_type='I' and d.isactive='Y' and d.did<>1 and d.did in (select did from mst_user_vs_devotee where user_id=$id)";
+        $sql = $sql . $sqlWhere . " order by d.encoded_search_name";// LIMIT 20";
+        $results = $this->getAdapter()->fetchAll($sql);
         return $results;
     }
     
