@@ -42,13 +42,25 @@ class Application_Model_DbTable_Devotee extends Zend_Db_Table_Abstract
         return $results;
     }
 //--------------------------------------------------------------------------------       
-    public function getNumberofRecords(){
+    public function getNumberOfRecords(){
         $select = $this->_db->select();
         $select->from(array('d'=>'devotee'), array('d.did'));
         $result = $this->getAdapter()->fetchAll($select);
         $num_rows = count($result);
         return $num_rows;
     }
+    /*
+    Returns the list used for the purpose to indentify a devotee.
+    did, name, searchname, pic,center
+    */
+    public function listIndentificationInfo(){
+        $select = $this->_db->select();
+        $select->from(array('d'=>'devotee'), array('d.did'));
+        $result = $this->getAdapter()->fetchAll($select);
+        $num_rows = count($result);
+        return $num_rows;
+    }
+        
 /*    
  Add a new devotee
 
