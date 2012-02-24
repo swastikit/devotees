@@ -4,8 +4,7 @@ class Application_Form_Devotees_AddNewDevotee extends Zend_Form
 {
     public function init(){
     //parent::__construct($options);
-    
-    $this->setName('addnewdevotee')
+   $this->setName('addnewdevotee')
          ->setAttrib('id','addnewdevotee')
          ->setEnctype(Zend_Form::ENCTYPE_MULTIPART);
 
@@ -708,12 +707,37 @@ $SubForm_ServicesRendered_Info->addElements(array($ServicesRendered,$ServicesInt
     
     public function setSubFormDecorators(Zend_Form_SubForm $subForm)
     {
-        $subForm->setDecorators(array(
-            'FormElements',
-            array('HtmlTag', array('tag' => 'dl',
-                                   'class' => 'zend_form')),
-            'Form',
+        $subForm->setDecorators(array('FormElements',
+                                array('HtmlTag', 
+                                array('tag' => 'table',
+                                      'class' => 'zend_form')),
+                                      'Form',
         ));
+        
+        if ($subForm->getName() == '') {
+        $subForm->setDecorators(array('PrepareElements',
+                                      array('ViewScript', 
+                                      array('viewScript' => '')),
+        ));
+        
+        }
+        
+        if ($subForm->getName() == '') {
+            $subForm->setDecorators(array('PrepareElements',
+                                    array('ViewScript', 
+                                    array('viewScript' => '')),
+            ));
+
+        }
+
+        if ($subForm->getName() == '') {
+            $subForm->setDecorators(array('PrepareElements',
+                                    array('ViewScript', 
+                                    array('viewScript' => '')),
+            ));
+
+        }
+
         return $this;
     }
     

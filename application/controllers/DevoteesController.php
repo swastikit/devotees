@@ -92,7 +92,7 @@ class DevoteesController extends Zend_Controller_Action
     public function getForm()
     {
         if (null === $this->_form) {
-            $this->_form = new Application_Form_Devotees_AddNewDevotee();
+            $this->_form = new Application_Form_Devotees_AddNewDevotee('', array('disableLoadDefaultDecorators' => true));
         }
         return $this->_form;
     }
@@ -124,7 +124,7 @@ class DevoteesController extends Zend_Controller_Action
         }
         return $stored;
     }
-    
+   
 /*
  *
  * Get list of all subforms available
@@ -372,5 +372,4 @@ $devotee_data = array(
    // }
    //   $this->view->form = $form; 
  //}
- 
 }        
