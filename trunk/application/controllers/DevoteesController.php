@@ -262,18 +262,8 @@ class DevoteesController extends Zend_Controller_Action
         }
         
         if (!$this->subFormIsValid($form,$this->getRequest()->getPost())) {
-            
-//            session_start();
-//            $q = "INSERT INTO table (first_name,middle_name,last_name,do_birth,gender,country_id,center_id,counselor_id,mobile,email,pres_phone,devotee_status,asram_status_id) VALUES (null,'value1','value2')";
-//            $r = mysql_query($q);
-//            $_SESSION['rowid'] = mysql_insert_id();
-            
-            
             $this->view->form = $this->getForm()->prepareSubForm($form);
             return $this->render('addnewdevotee');
-            
-/********** Here we will have to insert current subform's data into the devotee db_table*************/
-            
         }
         
         $form = $this->getNextSubForm();
