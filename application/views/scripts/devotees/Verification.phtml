@@ -5,13 +5,11 @@
 </p>
  
 
-<?php 
-// Have to do this construct due to how items are stored in session
-// namespaces
-?>
+<?php // Have to do this construct due to how items are stored in session
+      // namespaces?>
+
 <?php  foreach ($this->info as $info): ?>
 <?php  foreach ($info as $form => $data): ?>
-
 <h4><?php echo ucfirst($form) ?>:</h4>
 
 <dl>
