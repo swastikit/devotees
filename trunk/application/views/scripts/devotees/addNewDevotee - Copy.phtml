@@ -4,7 +4,6 @@
 
 <div> 
 <form id="<?php echo $form->getAttrib('id') ?>" action="<?php echo $form->getAction() ?>" method="<?php echo $form->getMethod() ?>" enctype="<?php echo $form->getAttrib('enctype')?>">
-<?php //echo $form->id->renderViewHelper();?>
 <div id="page-title">BASIC INFORMATION</div>
 <table style="background: #F0F1F2; width: 790px; ">
 <tr>
@@ -271,3 +270,281 @@
     </table>
 </div>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl('css/local.css') ?>" />
+<?php //$this->bodyCopy; ?>
+<?php $form  =  $this->form?>
+<?php $subform = $form->getName(); ?>
+<?php if($subform == 'basic_info'): ?>  
+<form id="<?php echo $form->getAttrib('id') ?>" action="<?php echo $form->getAction() ?>" method="<?php echo $form->getMethod() ?>" enctype="<?php echo $form->getAttrib('enctype')?>">
+<div id="page-title">BASIC INFORMATION</div>
+<table style="background: #F0F1F2; width: 790px; ">
+<tr>
+    <td>
+        <dt>Devotee Photo</dt>
+    </td>
+    <td>:</td>
+    <td>
+        <?php echo $form->uplphoto; ?> 
+        <?php echo (($form->uplphoto->hasErrors())?'<dd>'. $form->uplphoto->renderErrors() .'</dd>':'');?>
+    </td> 
+</tr> 
+<tr>
+    <td>
+        <dt>Legal Name:*</dt>
+    </td>
+    <td>:</td>
+    <td>
+        <dd><?php echo $form->first_name->renderViewHelper() ?>&nbsp;<?php echo $form->middle_name->renderViewHelper();?>&nbsp;<?php echo $form->last_name->renderViewHelper()?></dd>
+        <dd><?php echo (($form->first_name->hasErrors())?'<dd>'.$form->first_name->renderErrors().'</dd>' :'');?>&nbsp;<?php echo (($form->middle_name->hasErrors())?'<dd>'.$form->middle_name->renderErrors().'</dd>' :'');?>&nbsp;<?php echo (($form->last_name->hasErrors())?'<dd>' . $form->last_name->renderErrors() .'</dd>' :'');?></dd>
+    </td>
+</tr>
+<tr>
+    <td>
+            <?php  echo $form->day->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->day->renderViewHelper(); ?>&nbsp;<?php echo $form->month->renderViewHelper(); ?>&nbsp;<?php echo $form->year->renderViewHelper(); ?> 
+            <?php echo (($form->day->hasErrors())?'<dd>' . $form->day->renderErrors() .'</dd>' :'');?>&nbsp;<?php echo (($form->month->hasErrors())?'<dd>' . $form->month->renderErrors() .'</dd>' :'');?>&nbsp;<?php echo (($form->year->hasErrors())?'<dd>' . $form->year->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->gender->renderLabel(); ?>        
+    </td>
+    <td>:</td>
+    <td>
+        <dd><?php echo $form->gender->renderViewHelper(); echo (($form->gender->hasErrors())?'<dd>' . $form->gender->renderErrors() .'</dd>' :'');?></dd>        
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->cc->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd><?php echo $form->cc->renderViewHelper(); echo (($form->cc->hasErrors())?'<dd>' . $form->cc->renderErrors('please select valid country code') .'</dd>' :'');?></dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->center->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->center->renderViewHelper(); echo (($form->center->hasErrors())?'<dd>' . $form->center->renderErrors('please select valid center') .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+<td>
+        <?php  echo $form->mobile->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->mobile->renderViewHelper(); echo (($form->mobile->hasErrors())?'<dd>' . $form->mobile->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->phone_number->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->phone_number->renderViewHelper(); echo (($form->phone_number->hasErrors())?'<dd>' . $form->phone_number->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+
+<tr>
+<td>
+        <?php  echo $form->counselor->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+        <?php echo $form->counselor->renderViewHelper(); echo (($form->counselor->hasErrors())?'<dd>' . $form->counselor->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->mentor->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->mentor->renderViewHelper(); echo (($form->mentor->hasErrors())?'<dd>' . $form->mentor->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->email->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->email->renderViewHelper(); echo (($form->email->hasErrors())?'<dd>' . $form->email->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->counselee_status->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->counselee_status->renderViewHelper(); echo (($form->counselee_status->hasErrors())?'<dd>' . $form->counselee_status->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php  echo $form->active_status->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->active_status->renderViewHelper(); echo (($form->active_status->hasErrors())?'<dd>' . $form->active_status->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td>
+        <dd>
+            <?php echo $form->save->renderViewHelper(); echo (($form->save->hasErrors())?'<dd>' . $form->save->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+</table>
+</form>
+<?php endif; ?>
+
+<?php if ($subform == 'personal_info'): ?>
+<form id="<?php echo $form->getAttrib('id') ?>" action="<?php echo $form->getAction() ?>" method="<?php echo $form->getMethod() ?>" enctype="<?php echo $form->getAttrib('enctype')?>">
+<div id="page-title">PERSONAL INFORMATION</div>
+<!--<dl class="table-display">-->
+<table style="background: #F0F1F2; width: 790px; ">
+<tr>
+    <td>
+        <?php  echo $form->mother_tongue->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->mother_tongue->renderViewHelper(); ?> 
+            <?php echo (($form->mother_tongue->hasErrors())?'<dd>' . $form->mother_tongue->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php echo $form->bld_grp->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->bld_grp->renderViewHelper(); ?>
+            <?php echo (($form->bld_grp->hasErrors())?'<dd>' . $form->bld_grp->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+    <tr>
+    <td>
+        <?php echo $form->previous_religion->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td>
+        <dd>
+            <?php echo $form->previous_religion->renderViewHelper(); ?>
+            <?php echo (($form->previous_religion->hasErrors())?'<dd>' . $form->previous_religion->renderErrors() .'</dd>' :'');?>
+        </dd>
+    </td>
+</tr>
+<tr>
+    <td>
+        <?php echo $form->languages_known->renderLabel(); ?>
+    </td>
+    <td>:</td>
+    <td style="vertical-align: bottom;">
+    <pre>
+(For selecting multiple languages from the below options keep the 'Ctrl'key 
+ on the keyboard pressed and then click on the languages you know.) 
+    </pre>
+    <dd>
+            <?php echo $form->languages_known->renderViewHelper(); ?>
+            <?php echo (($form->languages_known->hasErrors())?'<dd>' . $form->languages_known->renderErrors() .'</dd>' :'');?> 
+    </dd>
+    </td>
+</tr>
+</table>
+<?php endif; ?> 
+</form>
+
