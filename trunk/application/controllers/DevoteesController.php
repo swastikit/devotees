@@ -305,7 +305,7 @@ endforeach;
 below mentioned is a code
 for renaming the photo
 */
-
+//$dev_photo_name =  
 
 
 
@@ -314,14 +314,86 @@ for renaming the photo
 Below is the data to
 be inserted in devotee table
 */
+//-------------------Date of Birth--------------------------------------
+//if(array_key_exists('birth_day',$dev_data)&&
+//   array_key_exists('birth_month',$dev_data)&&
+//   array_key_exists('birth_year',$dev_data)){
+    
+$birthdatearray = array('year'  =>$dev_data['birth_year'], 
+                        'month' =>$dev_data['birth_month'], 
+                        'day'   =>$dev_data['birth_day']
+                  );    
+//}
 
+$birthdate = new Zend_Date($birthdatearray);
+
+//-------------------Date of Begining of chanting------------------------
+//if(array_key_exists('bgn_chan_from_day',$dev_data)&&
+//   array_key_exists('bgn_chan_from_month',$dev_data)&&
+//   array_key_exists('bgn_chan_from_year',$dev_data)){
+    
+$bgn_chan_from_datearray = array('year'  =>$dev_data['bgn_chan_from_year'], 
+                                 'month' =>$dev_data['bgn_chan_from_month'], 
+                                 'day'   =>$dev_data['bgn_chan_from_year']
+                  );    
+//}
+$bgn_chan_from_date = new Zend_Date($bgn_chan_from_datearray);
+
+//-------------------Date of Begining of 16 rounds chanting---------------
+//if(array_key_exists('chan_16_rounds_year',$dev_data)&&
+//   array_key_exists('chan_16_rounds_month',$dev_data)&&
+//   array_key_exists('chan_16_rounds_year',$dev_data)){
+    
+$chan_16_rounds_datearray = array('year'  =>$dev_data['chan_16_rounds_year'], 
+                                  'month' =>$dev_data['chan_16_rounds_month'], 
+                                  'day'   =>$dev_data['chan_16_rounds_day']
+                  );    
+//}
+$chan_16_rounds_date = new Zend_Date($chan_16_rounds_datearray);
+
+//-------------------Date of harinam initiation---------------------------
+//if(array_key_exists('harinam_initiatn_day',$dev_data)&&
+//   array_key_exists('harinam_initiatn_month',$dev_data)&&
+//   array_key_exists('harinam_initiatn_year',$dev_data)){
+    
+$harinam_initiatn_datearray = array('year'  =>$dev_data['harinam_initiatn_year'], 
+                                    'month' =>$dev_data['harinam_initiatn_month'], 
+                                    'day'   =>$dev_data['harinam_initiatn_day']
+                  );    
+//}
+
+$harinam_initiatn_date = new Zend_Date($harinam_initiatn_datearray);
+
+//-------------------Date of brahman initiation------------------------
+//if(array_key_exists('date_of_brahman_initiation',$dev_data)&&
+//   array_key_exists('brahman_initiation_month',$dev_data)&&
+//   array_key_exists('brahman_initiation_year',$dev_data)){
+    
+$brahman_initiation_datearray = array('year'  =>$dev_data['brahman_initiation_year'], 
+                                      'month' =>$dev_data['brahman_initiation_month'], 
+                                      'day'   =>$dev_data['date_of_brahman_initiation']
+                  );                      
+//}
+$brahman_initiation_date = new Zend_Date($brahman_initiation_datearray);
+
+//-------------------Date of sanyas_initiation------------------------
+//if(array_key_exists('sanyas_initiation_day',$dev_data)&&
+//   array_key_exists('sanyas_initiation_month',$dev_data)&&
+//   array_key_exists('sanyas_initiation_year',$dev_data)){
+
+$sanyas_initiation_datearray = array('year'  =>$dev_data['sanyas_initiation_year'], 
+                                     'month' =>$dev_data['sanyas_initiation_month'], 
+                                     'day'   =>$dev_data['sanyas_initiation_day']
+                  );    
+//}
+$sanyas_initiation_date = new Zend_Date($sanyas_initiation_datearray);
     
 $devotee_data = array( 
                     'pics'            =>$dev_data['uplphoto'], //this will give you the file name now you have to rename it then it will be inserted into the database
                     'first_name'      =>$dev_data['first_name'],
                     'middle_name'     =>$dev_data['middle_name'],
                     'last_name'       =>$dev_data['last_name'],
-                    'do_birth'        =>$dev_data['day'].'-'.$dev_data['month'].'-'.$dev_data['year'],
+                    'do_birth'        =>$birthdate->toString('yyyyMMddHHmmss'),
                     'gender'          =>$dev_data['gender'],
                     'country_id'      =>$dev_data['cc'],
                     'center_id'       =>$dev_data['center'],
@@ -376,21 +448,21 @@ $devotee_data = array(
                     'off_country_id'  =>$dev_data['office_country'],
                     'off_pin'         =>$dev_data['office_zip_code'],
                     'off_phone'       =>$dev_data['office_phone'],
-                    'chanting_started'=>$dev_data['bgn_chan_from_day'].'-'.$dev_data['bgn_chan_from_month'].'-'.$dev_data['bgn_chan_from_year'],
+                    'chanting_started'=>$bgn_chan_from_date->toString('yyyyMMddHHmmss'),
                      'chk_chant_start'=>$dev_data['bgn_chan_from_na'],
                         'no_of_rounds'=>$dev_data['no_rou_pres_chanting'],
-                 'chanting_16_started'=>$dev_data['chan_16_rounds_day'].'-'.$dev_data['chan_16_rounds_month'].'-'.$dev_data['chan_16_rounds_year'],
+                 'chanting_16_started'=>$chan_16_rounds_date->toString('yyyyMMddHHmmss'),
                     //'chk_chant_16'=>$dev_data[],
                     'intro_by'        =>$dev_data['intro_by'],
                     'intro_year'      =>$dev_data['year_introduction'],
                     'intro_center'    =>$dev_data['intro_center'],
                     'chk_date_harinam'=>$dev_data['harinam_initiatn_na'],
-                    'do_harinaminit'  =>$dev_data['harinam_initiatn_day'].'-'.$dev_data['harinam_initiatn_month'].'-'.$dev_data['harinam_initiatn_year'],
+                    'do_harinaminit'  =>$harinam_initiatn_date->toString('yyyyMMddHHmmss'),
                     'chk_date_brahmin'=>$dev_data['brahman_initiated_na'],
-                    'do_brahmininit'  =>$dev_data['date_of_brahman_initiation'].'-'.$dev_data['brahman_initiation_month'].'-'.$dev_data['brahman_initiation_year'],
+                    'do_brahmininit'  =>$brahman_initiation_date->toString('yyyyMMddHHmmss'),
                     'ini_guru_id'     =>$dev_data['sanyas_spiritual_master'],
                     'chk_date_sanyas' =>$dev_data['sanyas_initiation_day'],
-                    'do_sanyasinit'   =>$dev_data['sanyas_initiation_day'].'-'.$dev_data['sanyas_initiation_month'].'-'.$dev_data['sanyas_initiation_year'],
+                    'do_sanyasinit'   =>$sanyas_initiation_date->toString('yyyyMMddHHmmss'),
                     'sanyas_name'     =>$dev_data['sanyas_name'],
                     'sanyas_title'    =>$dev_data['sanyas_title'],
                     'sanyas_guru_id'  =>$dev_data['sanyas_spiritual_master'],
@@ -410,15 +482,17 @@ $devotee_data = array(
                     //'modified'        =>$this->getRequest()->getPost(''),
                     //'pan'             =>$this->getRequest()->getPost(''),
                     //'receipt_name'    =>$this->getRequest()->getPost(''),
-                    //'entered_date'    =>$this->getRequest()->getPost(''),
+                    'entered_date'    =>Zend_Date::now()->toString('yyyyMMddHHmmss'),
                  'dolm'               =>$user['dolm'],
                   'modibyuid'         =>$user['modi_by_uid'],
                     'entered_by_uid'  =>$user['entered_by_uid'],
                     //'verified'          =>$this->getRequest()->getPost(''),
-                    //'do_verify'         =>$this->getRequest()->getPost(''),
+                    'do_verify'       =>Zend_Date::now()->toString('yyyyMMddHHmmss'),
                     //'verified_by_uid'   =>$this->getRequest()->getPost('')
 );
-        $d->insert($devotee_data);
+        $did = $d->insert($devotee_data);
+        $this->view->lastrecordinserted = $did; 
+                     
 
         $this->render('verification');
         //Clear the session data
