@@ -76,32 +76,11 @@ class Application_Model_DbTable_Devotee extends Zend_Db_Table_Abstract
         return $results;
     }
 
-        
-/*    
- Add a new devotee
 
-public function addnewdevotee($devotee_data=array()){
+public function lastDevoteeinserted(){
     
-        $devotee_data = array(
-                              //'did'             =>$did,
-                              'first_name'      =>$fname ,
-                              'middle_name'     =>$mname ,
-                              'last_name'       =>$lname ,
-                              'do_birth'        =>$d_o_b ,
-                              'gender'          =>$gender ,
-                              'country_id'      =>$countryCode,
-                              'center_id'       =>$CenterId ,
-                              'counselor_id'    =>$Counselor_Id,
-                              'mobile'          =>$mobile_number ,
-                              'email'           =>$email_id ,
-                              'pres_phone'      =>$present_phone ,
-                              'counselee_status'=>$counselee_Status ,
-                              'devotee_status'  =>$Devotee_Status ,
-                              'asram_status_id' =>$Asram_Status,
-                              'mother_tongue_id'=>$Mother_Tongue,
-                );
+        
                                 
     $this->insert($devotee_data);    
     }
-    */
 }

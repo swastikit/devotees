@@ -56,23 +56,23 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
            ->addValidator('NotEmpty')
            ->addFilters(array('StripTags','StringTrim'));
                
-    $Day = new  Zend_Form_Element_Select('day');
+    $Day = new  Zend_Form_Element_Select('birth_day');
     $Day ->setLabel('Date of Birth*')
-         ->setName('day')
+         ->setName('birth_day')
          ->setRequired(true)
          ->setMultiOptions(Rgm_Basics::getDates())
          ->addValidator('NotEmpty')
          ->addFilters(array('StripTags','StringTrim'));
     
-    $Month = new Zend_Form_Element_Select('month');
-    $Month ->setName('month')
+    $Month = new Zend_Form_Element_Select('birth_month');
+    $Month ->setName('birth_month')
            ->setRequired(true)
            ->setMultiOptions(Rgm_Basics::getMonths())
            ->addValidator('NotEmpty')
            ->addFilters(array('StripTags','StringTrim'));
     
-    $Year = new Zend_Form_Element_Select('year');      
-    $Year ->setName('year')
+    $Year = new Zend_Form_Element_Select('birth_year');      
+    $Year ->setName('birth_year')
           ->setRequired(true)
           ->setMultiOptions(Rgm_Basics::getYears(1912,2012))
           ->addValidator('NotEmpty')
