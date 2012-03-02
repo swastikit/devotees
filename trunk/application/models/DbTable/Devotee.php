@@ -75,12 +75,4 @@ class Application_Model_DbTable_Devotee extends Zend_Db_Table_Abstract
         $results = $this->getAdapter()->fetchAll($sql);
         return $results;
     }
-
-
-public function lastDevoteeinserted(){
-    
-        
-                                
-    $this->insert($devotee_data);    
-    }
 }
