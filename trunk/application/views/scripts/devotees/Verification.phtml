@@ -1,9 +1,6 @@
 <?php // registration/verification.phtml ?>
-<h2>Thank you for registering!</h2>
-<p>
-    Here is the information you provided:
-</p>
- 
+<h2>Thank you for registering! Here is the information you provided: </h2>
+<h1><?php echo "The DID of the last devotee added is :" ;?> <?php echo $this->lastrecordinserted ; ?></h1>
 
 <?php // Have to do this construct due to how items are stored in session
       // namespaces?>
