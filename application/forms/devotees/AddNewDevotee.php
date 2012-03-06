@@ -30,7 +30,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
     //$this->_helper->viewRenderer->setNoRender(true);
     
     $Fname = new Zend_Form_Element_Text('first_name');
-    $Fname ->setLabel('First Name*')
+    $Fname ->setLabel('Legal Name*')
            ->setName('first_name')
            ->setAttrib('placeholder','First Name')
            ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
@@ -39,8 +39,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
            ->addFilters(array('StripTags','StringTrim'));
                
     $Mname = new Zend_Form_Element_Text('middle_name');
-    $Mname ->setLabel('Middle Name*')
-           ->setName('middle_name')
+    $Mname ->setName('middle_name')
            ->setAttrib('placeholder','Middle Name')
            ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
            ->setRequired(true)
@@ -48,8 +47,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
            ->addFilters(array('StripTags','StringTrim'));
     
     $Lname = new Zend_Form_Element_Text('last_name');
-    $Lname ->setLabel('Last Name*')
-           ->setName('last_name')
+    $Lname ->setName('last_name')
            ->setAttrib('placeholder','Last Name')
            ->addValidator(new Zend_Validate_Alnum(array('allowWhiteSpace' => true))) 
            ->setRequired(true)
@@ -59,6 +57,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
     $Day = new  Zend_Form_Element_Select('birth_day');
     $Day ->setLabel('Date of Birth*')
          ->setName('birth_day')
+         ->setAttrib('placeholder', 'DAY')
          ->setRequired(true)
          ->setMultiOptions(Rgm_Basics::getDates())
          ->addValidator('NotEmpty')
@@ -67,6 +66,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
     $Month = new Zend_Form_Element_Select('birth_month');
     $Month ->setName('birth_month')
            ->setRequired(true)
+           ->setAttrib('placeholder', 'MONTH')
            ->setMultiOptions(Rgm_Basics::getMonths())
            ->addValidator('NotEmpty')
            ->addFilters(array('StripTags','StringTrim'));
@@ -74,6 +74,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
     $Year = new Zend_Form_Element_Select('birth_year');      
     $Year ->setName('birth_year')
           ->setRequired(true)
+          ->setAttrib('placeholder', 'YEAR')
           ->setMultiOptions(Rgm_Basics::getYears(1912,2012))
           ->addValidator('NotEmpty')
           ->addFilters(array('StripTags','StringTrim'));
@@ -145,7 +146,7 @@ $SubForm_BasicInfo = new Zend_Form_SubForm();
     
     $Email = new Zend_Form_Element_Text('email');
     $Email ->setName('email')
-           ->setLabel('Email Id:')
+           ->setLabel('Email Id:')          
            ->addValidator('NotEmpty')
            ->addValidator('EmailAddress')
            ->addFilters(array('StripTags','StringTrim'));
@@ -697,7 +698,6 @@ $SubForm_ServicesRendered_Info->addElements(array(//$ServicesRendered,
                              'devotional_info' => $SubForm_Devotional_Info,
                              'services_info'   => $SubForm_ServicesRendered_Info
                             ));
-    
   }
   
 /*
