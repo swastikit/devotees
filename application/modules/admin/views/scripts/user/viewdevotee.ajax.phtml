@@ -7,8 +7,8 @@
         <ol>
         <?php $c=0; foreach ($this->devoteeList as $u): ?>
         <li class='liSelectedItem'>
-            <img src="<?php echo $this->baseUrl()?>/photos/thumbs/<?php echo $this->escape($u['pics'])?>" alt="<?php echo $this->escape($u['search_name'])?>" title="<?php echo $this->escape($u['search_name'])?>"/>
-            <?php echo $this->escape($u['search_name'])?><br/>did : <?php echo $this->escape($u['did'])?></span><br/><?php echo $this->escape($u['centername'])?>                    
+            <img src="<?php echo $this->baseUrl()?>/photos/thumbs/<?php echo $this->escape($u['pics'])?>" alt="<?php echo $this->escape($u['display_name'])?>" title="<?php echo $this->escape($u['display_name'])?>"/>
+            <?php echo $this->escape($u['display_name'])?><br/>did : <?php echo $this->escape($u['did'])?></span><br/><?php echo $this->escape($u['centername'])?>                    
         </li>
         <?php endforeach; ?>
         </ol>

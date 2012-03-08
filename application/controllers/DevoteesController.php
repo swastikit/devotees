@@ -48,7 +48,7 @@ class DevoteesController extends Zend_Controller_Action
     $mentor = $mentors->getMentor();
     $this->view->mentor = $mentor;
     $this->view->searchOptions=Rgm_Basics::getDevoteeSearchOptions();
-    $this->view->selSearchBy='SEARCH_NAME';
+    $this->view->selSearchBy='display_name';
     /*-------------------Counselor List--------------------------*/
     $con=new Application_Model_DbTable_MstCounselor();
     $rs = new stdClass;

@@ -6,7 +6,7 @@
     <div>
         <dl class="table-display">
         	<dt>Name</dt>
-        	<dd>: <?php echo $this->escape($this->u['search_name']);?></dd>
+        	<dd>: <?php echo $this->escape($this->u['display_name']);?></dd>
         	<dt>User Id</dt>
         	<dd>: <?php echo $form->userId->renderViewHelper(); echo (($form->userId->hasErrors())?'<dd>' . $form->userId->renderErrors() .'</dd>' :'');?></dd>
         	<dt>Role</dt>

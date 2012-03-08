@@ -6,7 +6,7 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     {
         $select = $this->_db->select();
         $select->from(array('u' => 'mst_user'), array('u.id', 'u.login','u.role_id'))
-                ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.first_name','d.middle_name','d.last_name','d.search_name'))
+                ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.first_name','d.middle_name','d.last_name','d.display_name'))
                 ->joinLeft(array('r' => 'mst_user_role'), 'u.role_id = r.id', array('role_name' => 'r.name'))
                 ->where('u.is_active = ?','Y')
                 ->where('u.is_blocked = ?','N')
@@ -64,7 +64,7 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     public function findByLogin($login){
         $select = $this->_db->select();
         $select->from(array('u' => 'mst_user'), array('u.id','u.login','u.security_answer01','u.security_answer02','u.security_answer03'))
-                        ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.first_name','d.middle_name','d.last_name','d.search_name','d.email','d.mobile','d.country_id'))
+                        ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.first_name','d.middle_name','d.last_name','d.display_name','d.email','d.mobile','d.country_id'))
                         ->joinLeft(array('q1' => 'mst_user_security_questions'), 'u.security_question_id01 = q1.id', array('security_question01' => 'q1.question'))
                         ->joinLeft(array('q2' => 'mst_user_security_questions'), 'u.security_question_id02 = q2.id', array('security_question02' => 'q2.question'))
                         ->joinLeft(array('q3' => 'mst_user_security_questions'), 'u.security_question_id03 = q3.id', array('security_question03' => 'q3.question'))
@@ -81,7 +81,7 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     public function findById($id){
         $select = $this->_db->select();
         $select->from(array('u' => 'mst_user'), array('u.id','u.login','u.security_answer01','u.security_answer02','u.security_answer03','u.security_question_id01','u.security_question_id02','u.security_question_id03'))
-                        ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.first_name','d.middle_name','d.last_name' ,'d.search_name','d.email','d.mobile','d.country_id'))
+                        ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.first_name','d.middle_name','d.last_name' ,'d.display_name','d.email','d.mobile','d.country_id'))
                         ->joinLeft(array('q1' => 'mst_user_security_questions'), 'u.security_question_id01 = q1.id', array('security_question01' => 'q1.question'))
                         ->joinLeft(array('q2' => 'mst_user_security_questions'), 'u.security_question_id02 = q2.id', array('security_question02' => 'q2.question'))
                         ->joinLeft(array('q3' => 'mst_user_security_questions'), 'u.security_question_id03 = q3.id', array('security_question03' => 'q3.question'))
@@ -225,23 +225,23 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
         $select = $this->_db->select();
    		$select->from(array('u'=>'mst_user'),array('u.id', 'u.login', 'u.pwd', 'u.is_temporary_pwd', 'u.role_id', 'u.did','u.remarks','u.is_active','u.is_blocked','u.blocked_reason','u.blocked_date','u.owner_uid','u.entered_by_uid','u.entered_date','u.modi_by_uid','u.dolm','u.last_login'))	
                 ->joinLeft(array('r'=>'mst_user_role') , 'u.role_id = r.id', array('role'=>'r.name'))
-                ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.did','d.first_name','d.middle_name','d.last_name','d.initiated_name', 'encoded_name'=>'d.encoded_search_name', 'd.search_name', 'd.mobile', 'd.email', 'd.country_id', 'd.do_birth' , 'd.gender', 'd.center_id', 'd.counselor_id', 'd.blood_group', 'd.pics', 'd.devotee_status'))
+                ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.did','d.first_name','d.middle_name','d.last_name','d.initiated_name', 'encoded_name'=>'d.encoded_search_name', 'd.display_name', 'd.mobile', 'd.email', 'd.country_id', 'd.do_birth' , 'd.gender', 'd.center_id', 'd.counselor_id', 'd.blood_group', 'd.pics', 'd.devotee_status'))
                 ->joinLeft(array('cn'=>'mst_country'), 'd.country_id = cn.id', array('country'=>'cn.name','cn.tel_code'))
                 ->joinLeft(array('a'=>'mst_asram'), 'd.asram_status_id = a.id', array('ashram'=>'a.name'))
                 ->joinLeft(array('c'=>'mst_center'), 'd.center_id = c.id', array('centername'=>'c.name'))
                 ->joinLeft(array('con'=>'mst_counselor') , 'd.counselor_id = con.id' , array())
-                ->joinLeft(array('con_dev'=>'devotee'), 'con.did=con_dev.did', array('counselorname' => 'con_dev.search_name'))
+                ->joinLeft(array('con_dev'=>'devotee'), 'con.did=con_dev.did', array('counselorname' => 'con_dev.display_name'))
                 ->joinLeft(array('astcon'=>'mst_astcounselor') , 'd.ast_counselor_id = astcon.id' ,array())
-                ->joinLeft(array('astcon_dev'=>'devotee'), 'astcon.did=astcon_dev.did', array('astcounselorname' => 'astcon_dev.search_name'))
+                ->joinLeft(array('astcon_dev'=>'devotee'), 'astcon.did=astcon_dev.did', array('astcounselorname' => 'astcon_dev.display_name'))
                 ->joinLeft(array('hg'=>'mst_guru'), 'd.ini_guru_id = hg.id', array('iniguruname'=>'hg.name'))
                 ->joinLeft(array('sg'=>'mst_guru'), 'd.sanyas_guru_id = sg.id', array('sanguruname'=>'sg.name'))
 
                 ->joinLeft(array('o'=>'mst_user'),'u.owner_uid=o.id', array('ownerlogin'=>'o.login'))
-                ->joinLeft(array('o_dev'=>'devotee'), 'o.did=o_dev.did', array('ownername' => 'o_dev.search_name'))
+                ->joinLeft(array('o_dev'=>'devotee'), 'o.did=o_dev.did', array('ownername' => 'o_dev.display_name'))
                 ->joinLeft(array('e'=>'mst_user'),'u.entered_by_uid=e.id', array('enteredbylogin'=>'e.login'))
-                ->joinLeft(array('e_dev'=>'devotee'), 'e.did=e_dev.did', array('enteredbyname' => 'e_dev.search_name'))
+                ->joinLeft(array('e_dev'=>'devotee'), 'e.did=e_dev.did', array('enteredbyname' => 'e_dev.display_name'))
                 ->joinLeft(array('m'=>'mst_user'),'u.modi_by_uid=m.id', array('modifiedbylogin'=>'m.login'))
-                ->joinLeft(array('m_dev'=>'devotee'), 'm.did=m_dev.did', array('modifiedbyname' => 'm_dev.search_name'))
+                ->joinLeft(array('m_dev'=>'devotee'), 'm.did=m_dev.did', array('modifiedbyname' => 'm_dev.display_name'))
                 
                 ->where($this->_db->quoteInto('d.encoded_search_name LIKE ?','%' . Rgm_Basics::encodeDiacritics($options['searchname']) . '%'))
                 ->orWhere($this->_db->quoteInto('u.login LIKE ?','%' . $options['searchlogin'] . '%'))
@@ -288,23 +288,23 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
         $select = $this->_db->select();
    		$select->from(array('u'=>'mst_user'),array('u.id', 'u.login', 'u.pwd', 'u.is_temporary_pwd', 'u.role_id', 'u.did','u.remarks','u.is_active','u.is_blocked','u.blocked_reason','u.blocked_date','u.owner_uid','u.entered_by_uid','u.entered_date','u.modi_by_uid','u.dolm','u.last_login'))	
                 ->joinLeft(array('r'=>'mst_user_role') , 'u.role_id = r.id', array('role'=>'r.name'))
-                ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.did','d.first_name','d.middle_name','d.last_name','d.initiated_name', 'encoded_name'=>'d.encoded_search_name', 'd.search_name', 'd.mobile', 'd.email', 'd.country_id', 'd.do_birth' , 'd.gender', 'd.center_id', 'd.counselor_id', 'd.mobile', 'd.email', 'd.blood_group', 'd.pics', 'd.devotee_status'))
+                ->joinLeft(array('d'=>'devotee'), 'u.did=d.did', array('d.did','d.first_name','d.middle_name','d.last_name','d.initiated_name', 'encoded_name'=>'d.encoded_search_name', 'd.display_name', 'd.mobile', 'd.email', 'd.country_id', 'd.do_birth' , 'd.gender', 'd.center_id', 'd.counselor_id', 'd.mobile', 'd.email', 'd.blood_group', 'd.pics', 'd.devotee_status'))
                 ->joinLeft(array('cn'=>'mst_country'), 'd.country_id = cn.id', array('country'=>'cn.name','cn.tel_code'))                
                 ->joinLeft(array('a'=>'mst_asram'), 'd.asram_status_id = a.id', array('ashram'=>'a.name'))
                 ->joinLeft(array('c'=>'mst_center'), 'd.center_id = c.id', array('centername'=>'c.name'))
                 ->joinLeft(array('con'=>'mst_counselor') , 'd.counselor_id = con.id' , array())
-                ->joinLeft(array('con_dev'=>'devotee'), 'con.did=con_dev.did', array('counselorname' => 'con_dev.search_name'))
+                ->joinLeft(array('con_dev'=>'devotee'), 'con.did=con_dev.did', array('counselorname' => 'con_dev.display_name'))
                 ->joinLeft(array('astcon'=>'mst_astcounselor') , 'd.ast_counselor_id = astcon.id' ,array())
-                ->joinLeft(array('astcon_dev'=>'devotee'), 'astcon.did=astcon_dev.did', array('astcounselorname' => 'astcon_dev.search_name'))
+                ->joinLeft(array('astcon_dev'=>'devotee'), 'astcon.did=astcon_dev.did', array('astcounselorname' => 'astcon_dev.display_name'))
                 ->joinLeft(array('hg'=>'mst_guru'), 'd.ini_guru_id = hg.id', array('iniguruname'=>'hg.name'))
                 ->joinLeft(array('sg'=>'mst_guru'), 'd.sanyas_guru_id = sg.id', array('sanguruname'=>'sg.name'))
 
                 ->joinLeft(array('o'=>'mst_user'),'u.owner_uid=o.id', array('ownerlogin'=>'o.login'))
-                ->joinLeft(array('o_dev'=>'devotee'), 'o.did=o_dev.did', array('ownername' => 'o_dev.search_name'))
+                ->joinLeft(array('o_dev'=>'devotee'), 'o.did=o_dev.did', array('ownername' => 'o_dev.display_name'))
                 ->joinLeft(array('e'=>'mst_user'),'u.entered_by_uid=e.id', array('enteredbylogin'=>'e.login'))
-                ->joinLeft(array('e_dev'=>'devotee'), 'e.did=e_dev.did', array('enteredbyname' => 'e_dev.search_name'))
+                ->joinLeft(array('e_dev'=>'devotee'), 'e.did=e_dev.did', array('enteredbyname' => 'e_dev.display_name'))
                 ->joinLeft(array('m'=>'mst_user'),'u.modi_by_uid=m.id', array('modifiedbylogin'=>'m.login'))
-                ->joinLeft(array('m_dev'=>'devotee'), 'm.did=m_dev.did', array('modifiedbyname' => 'm_dev.search_name'))
+                ->joinLeft(array('m_dev'=>'devotee'), 'm.did=m_dev.did', array('modifiedbyname' => 'm_dev.display_name'))
                 ->Where('u.id=?',$id);
         $results = $this->getAdapter()->fetchRow($select);
         return $results;
@@ -342,8 +342,8 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     //Returns the list of Counselor assigned to this user 
     //$option == ALL=all; checked=only assigned to this user; unchecked=those which are not assigned to this user.
     public function getCounselorList($id,$option){
-        $sqlChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_counselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.counselor_id FROM  mst_user_vs_counselor u WHERE u.user_id=$id)";
-        $sqlUnChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_counselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.counselor_id FROM  mst_user_vs_counselor u WHERE u.user_id=$id)";
+        $sqlChecked="SELECT a.id, a.did, d.display_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_counselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.counselor_id FROM  mst_user_vs_counselor u WHERE u.user_id=$id)";
+        $sqlUnChecked="SELECT a.id, a.did, d.display_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_counselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.counselor_id FROM  mst_user_vs_counselor u WHERE u.user_id=$id)";
         $sqlAll = $sqlChecked . " UNION ALL " . $sqlUnChecked;
         $sqlOrderBy = " ORDER BY encoded_search_name ASC";
         if($option=='ALL'){
@@ -358,8 +358,8 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     //Returns the list of mentor assigned to this user 
     //$option == ALL=all; checked=only assigned to this user; unchecked=those which are not assigned to this user.
     public function getMentorList($id,$option){
-        $sqlChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.astcounselor_id FROM  mst_user_vs_mentor u WHERE u.user_id=$id)";
-        $sqlUnChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.astcounselor_id FROM  mst_user_vs_mentor u WHERE u.user_id=$id)";
+        $sqlChecked="SELECT a.id, a.did, d.display_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.astcounselor_id FROM  mst_user_vs_mentor u WHERE u.user_id=$id)";
+        $sqlUnChecked="SELECT a.id, a.did, d.display_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.astcounselor_id FROM  mst_user_vs_mentor u WHERE u.user_id=$id)";
         $sqlAll = $sqlChecked . " UNION ALL " . $sqlUnChecked;
         $sqlOrderBy = " ORDER BY encoded_search_name ASC";
         if($option=='ALL'){
@@ -408,7 +408,7 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     //$option is irrlevent 
     public function getDevoteeList($id,$option,$page=null){
         $sqlWhere="";
-        $sql = "SELECT d.did,d.first_name,d.middle_name,d.last_name,d.organization_name,d.search_name,c.name centername, d.pics"
+        $sql = "SELECT d.did,d.first_name,d.middle_name,d.last_name,d.organization_name,d.display_name,c.name centername, d.pics"
                 . " FROM devotee AS d"
                 . " Left Join mst_center AS c ON d.center_id = c.id";
         $sqlWhere=" where d.contact_type='I' and d.isactive='Y' and d.did<>1 and d.did in (select did from mst_user_vs_devotee where user_id=$id)";

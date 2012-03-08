@@ -21,7 +21,7 @@ class IndexController extends Zend_Controller_Action
         $db = $resource->getDbAdapter();
         $select = $db->select()
         ->from(array('d' => 'devotee'),
-        array('d.did', 'd.search_name'))
+        array('d.did', 'd.display_name'))
         ->where('d.did=100');
         $stmt = $db->query($select);
         $result = $stmt->fetchAll();            
@@ -460,7 +460,6 @@ class IndexController extends Zend_Controller_Action
         $this->view->messages=$messages;
     }
 }
-
 
 
 

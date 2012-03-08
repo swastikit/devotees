@@ -61,7 +61,7 @@ var counselorList=<?php echo($this->jsonCounselor);?>;
                 </a>
             </div>
             <div class="details" >
-                <div class="searchname"><?php echo $this->escape($dev['search_name']);?></div>
+                <div class="searchname"><?php echo $this->escape($dev['display_name']);?></div>
                 <div>Legal Name :<label class="dataItem"><?php echo $this->escape($dev['first_name']);?></label></div>
                 <div>DOB/Gender :<label class="dataItem"> <?php $oDate = new DateTime($dev['do_birth']); echo $oDate->format("d-M-Y") . "/" . ($dev['gender']=='M'?"Male":"Female");?></label></div>
                 <div>Marital Status :<label class="dataItem"> <?php echo $this->escape($dev['ashram']);?></label></div>
