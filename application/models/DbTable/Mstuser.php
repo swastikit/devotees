@@ -358,8 +358,8 @@ class Application_Model_DbTable_Mstuser extends Zend_Db_Table_Abstract
     //Returns the list of mentor assigned to this user 
     //$option == ALL=all; checked=only assigned to this user; unchecked=those which are not assigned to this user.
     public function getMentorList($id,$option){
-        $sqlChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.astcounselor_id FROM  mst_user_vs_astcounselor u WHERE u.user_id=$id)";
-        $sqlUnChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.astcounselor_id FROM  mst_user_vs_astcounselor u WHERE u.user_id=$id)";
+        $sqlChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, 'checked' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id IN (SELECT u.astcounselor_id FROM  mst_user_vs_mentor u WHERE u.user_id=$id)";
+        $sqlUnChecked="SELECT a.id, a.did, d.search_name AS name, d.encoded_search_name, c.name AS center, c.id AS center_id, '' checked, a.isactive FROM mst_astcounselor AS a LEFT JOIN devotee AS d ON a.did = d.did LEFT JOIN mst_center AS c ON d.center_id = c.id WHERE a.id NOT IN (SELECT u.astcounselor_id FROM  mst_user_vs_mentor u WHERE u.user_id=$id)";
         $sqlAll = $sqlChecked . " UNION ALL " . $sqlUnChecked;
         $sqlOrderBy = " ORDER BY encoded_search_name ASC";
         if($option=='ALL'){
