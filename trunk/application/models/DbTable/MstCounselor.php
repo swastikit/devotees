@@ -8,7 +8,7 @@ class Application_Model_DbTable_MstCounselor extends Zend_Db_Table_Abstract
     public function getCounselor(){
         $select=$this->_db->select();
         $select->from(array('mcoun'=>'mst_counselor'),array('mcoun.id','mcoun.did'))
-               ->joinLeft(array('d'=>'devotee'),'mcoun.did=d.did',array('counselorname'=>'d.search_name'));
+               ->joinLeft(array('d'=>'devotee'),'mcoun.did=d.did',array('counselorname'=>'d.display_name'));
         $counselor = $this->getAdapter()->fetchAll($select);
         return $counselor;
     }
@@ -16,7 +16,7 @@ class Application_Model_DbTable_MstCounselor extends Zend_Db_Table_Abstract
         $select=$this->_db->select();
         $select->from(array('c'=>'mst_counselor'),array('c.id'))
                 ->joinLeft(array('d'=>'devotee'),'c.did=d.did',array())
-                ->joinLeft(array('cn'=>'mst_center'),'cn.id=d.center_id',array('name'=> new Zend_Db_Expr("CONCAT(d.search_name, '(', cn.name, ';id-', c.id ,')')")))
+                ->joinLeft(array('cn'=>'mst_center'),'cn.id=d.center_id',array('name'=> new Zend_Db_Expr("CONCAT(d.display_name, '(', cn.name, ';id-', c.id ,')')")))
                 ->where('d.isactive = ?','Y')
                 ->where($this->_db->quoteInto('d.encoded_search_name LIKE ?','%' . Rgm_Basics::encodeDiacritics($like) . '%'))
                 ->order('d.encoded_search_name');
@@ -27,10 +27,9 @@ class Application_Model_DbTable_MstCounselor extends Zend_Db_Table_Abstract
         $select=$this->_db->select();
         $select->from(array('c'=>'mst_counselor'),array('c.id'))
                 ->joinLeft(array('d'=>'devotee'),'c.did=d.did',array())
-                ->joinLeft(array('cn'=>'mst_center'),'cn.id=d.center_id',array('name'=> new Zend_Db_Expr("CONCAT(d.search_name, '(', cn.name, ')')")));
+                ->joinLeft(array('cn'=>'mst_center'),'cn.id=d.center_id',array('name'=> new Zend_Db_Expr("CONCAT(d.display_name, '(', cn.name, ')')")));
 
         $result=$this->_db->fetchPairs($select);
         return $result;
     }
 }
-

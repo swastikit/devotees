@@ -12,9 +12,9 @@
                 <?php if(count($this->devoteeList)): ?>
                 <?php $c=0; foreach ($this->devoteeList as $u): ?>
                 <li class='liSelectedItem'>
-                    <img src="<?php echo $this->baseUrl()?>/photos/thumbs/<?php echo $this->escape($u['pics'])?>" alt="<?php echo $this->escape($u['search_name'])?>" title="<?php echo $this->escape($u['search_name'])?>"/>
+                    <img src="<?php echo $this->baseUrl()?>/photos/thumbs/<?php echo $this->escape($u['pics'])?>" alt="<?php echo $this->escape($u['display_name'])?>" title="<?php echo $this->escape($u['display_name'])?>"/>
                     <a class='btnTopRightCorner' href='javascript:void(0)' title='Remove this devotee.'>X</a>
-                    <?php echo $this->escape($u['search_name'])?><br/>did : <span class='clsDID'><?php echo $this->escape($u['did'])?></span><br/><?php echo $this->escape($u['centername'])?>                    
+                    <?php echo $this->escape($u['display_name'])?><br/>did : <span class='clsDID'><?php echo $this->escape($u['did'])?></span><br/><?php echo $this->escape($u['centername'])?>                    
                 </li>
                 <?php endforeach; ?>
                 <?php else: ?>
@@ -58,7 +58,7 @@ YUI().use('autocomplete', 'autocomplete-highlighters','json-stringify','io-base'
     inputNode.plug(Y.Plugin.AutoComplete, {
         maxResults: 20,
         resultHighlighter: 'wordMatch',
-        resultTextLocator: 'search_name',
+        resultTextLocator: 'display_name',
         resultListLocator: 'result',
         source:surl,
         /*
@@ -95,9 +95,9 @@ YUI().use('autocomplete', 'autocomplete-highlighters','json-stringify','io-base'
         selected_dids.all('.empty').remove();
         result.raw.myUrl=myUrl;
         var TEMPLATE_LI = "<li class='liSelectedItem'>"
-        + "<img src='{myUrl}/photos/thumbs/{pics}' alt='{search_name}' title='{search_name}'>"
+        + "<img src='{myUrl}/photos/thumbs/{pics}' alt='{display_name}' title='{display_name}'>"
         + "<a class='btnTopRightCorner' href='javascript:void(0)' title='Remove this devotee.'>X</a>"
-        + "{search_name}<br>did : <span class='clsDID'>{did}</span><br>{centername}"                    
+        + "{display_name}<br>did : <span class='clsDID'>{did}</span><br>{centername}"                    
         + "</li>";
         var html = Y.Lang.sub(TEMPLATE_LI, result.raw);
         selected_dids.append(html);
