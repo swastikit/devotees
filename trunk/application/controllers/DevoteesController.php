@@ -305,10 +305,10 @@ endforeach;
 below mentioned is a code
 for renaming the photo
 */
-//$dev_photo_name =  
 
-
-
+$fullFilePath = $form->uplphoto->getFileName();
+$fullfilename = pathinfo($fullFilePath);
+$dev_photo_name = $this->getlastdid().'_'.rand(0,100).'.'.$fullfilename['extension'];  
 
 /*
 Below is the data to
@@ -388,107 +388,106 @@ $sanyas_initiation_datearray = array('year'  =>$dev_data['sanyas_initiation_year
 //}
 $sanyas_initiation_date = new Zend_Date($sanyas_initiation_datearray);
     
-$devotee_data = array( 
-                    'pics'            =>$dev_data['uplphoto'], //this will give you the file name now you have to rename it then it will be inserted into the database
-                    'first_name'      =>$dev_data['first_name'],
-                    'middle_name'     =>$dev_data['middle_name'],
-                    'last_name'       =>$dev_data['last_name'],
-                    'do_birth'        =>$birthdate->toString('yyyyMMddHHmmss'),
-                    'gender'          =>$dev_data['gender'],
-                    'country_id'      =>$dev_data['cc'],
-                    'center_id'       =>$dev_data['center'],
-                    'counselor_id'    =>$dev_data['counselor'],
-                    'mobile'          =>$dev_data['mobile'],
-                    'email'           =>$dev_data['email'],
-                    'pres_phone'      =>$dev_data['phone_number'],
-                    'devotee_status'  =>$dev_data['active_status'],
-                    'asram_status_id' =>$dev_data['marital_status'],
-                    'mother_tongue_id'=>$dev_data['mother_tongue'],
-                    'counselee_status'=>$dev_data['counselee_status'],
-                    'blood_group'     =>$dev_data['bld_grp'],
-                    'religion_id'     =>$dev_data['previous_religion'],
-                    'native_place'    =>$dev_data['native_place'],
-                    'native_state_id' =>$dev_data['native_state'],
-                    'pres_add1'       =>$dev_data['present_addline1'],
-                    'pres_add2'       =>$dev_data['present_addline2'],
-                    'pres_locality_id'=>$dev_data['present_locality'],
-                    'pres_pin'        =>$dev_data['present_zip_code'],
-                    'pres_city_id'    =>$dev_data['present_city'],
-                    'pres_state_id'   =>$dev_data['present_state'],
-                    'pres_country_id' =>$dev_data['present_country'],
-                    //'pres_perm'       =>$this->getRequest()->getPost(''),
-                    'perm_add1'       =>$dev_data['permenant_addline1'],
-                    'perm_add2'       =>$dev_data['permenant_addline2'],
-                    'perm_locality_id'=>$dev_data['permenant_locality'],
-                    'perm_pin'        =>$dev_data['permenant_zip_code'],
-                    'perm_city_id'    =>$dev_data['permenant_city'],
-                    'perm_state_id'   =>$dev_data['permenant_state'],
-                    'perm_country_id' =>$dev_data['permenant_country'],
-                    'perm_phone'      =>$dev_data['phone_number'],
-                    'father_name'     =>$dev_data['father_name'],
-                    //'father_did'    =>$this->getRequest()->getPost(''),
-                    'mother_name'     =>$dev_data['mother_name'],
-                    //'mother_did'    =>$this->getRequest()->getPost(''),
-                    //'spouse_name'   =>$this->getRequest()->getPost(''),
-                    //'spouse_did'    =>$this->getRequest()->getPost(''),
-                    //'do_marriage'   =>$dev_data[$key].'-'.$dev_data[$key].'-'.$dev_data[$key];
-                    'isgurukuli'      =>$dev_data['gurukuli'],
-                    'edu_cat_id'      =>$dev_data['highest_education'],
-          'education_qualification'   =>$dev_data['education_description'],
-                    'occupation_id'   =>$dev_data['occupation'],
-                    'designation'     =>$dev_data['designation'],
-                    'merits'          =>$dev_data['merits_awards'],
-                    'skill_set'       =>$dev_data['skill_sets'],
-                    'off_name'        =>$dev_data['office_name'],
-                    'off_add1'        =>$dev_data['office_address_line1'],
-                    'off_add2'        =>$dev_data['office_address_line2'],
-                    'off_locality_id' =>$dev_data['office_locality'],
-                    'off_city_id'     =>$dev_data['office_city'],
-                    'off_state_id'    =>$dev_data['office_state'],
-                    'off_country_id'  =>$dev_data['office_country'],
-                    'off_pin'         =>$dev_data['office_zip_code'],
-                    'off_phone'       =>$dev_data['office_phone'],
-                    'chanting_started'=>$bgn_chan_from_date->toString('yyyyMMddHHmmss'),
-                     'chk_chant_start'=>$dev_data['bgn_chan_from_na'],
-                        'no_of_rounds'=>$dev_data['no_rou_pres_chanting'],
-                 'chanting_16_started'=>$chan_16_rounds_date->toString('yyyyMMddHHmmss'),
-                    //'chk_chant_16'=>$dev_data[],
-                    'intro_by'        =>$dev_data['intro_by'],
-                    'intro_year'      =>$dev_data['year_introduction'],
-                    'intro_center'    =>$dev_data['intro_center'],
-                    'chk_date_harinam'=>$dev_data['harinam_initiatn_na'],
-                    'do_harinaminit'  =>$harinam_initiatn_date->toString('yyyyMMddHHmmss'),
-                    'chk_date_brahmin'=>$dev_data['brahman_initiated_na'],
-                    'do_brahmininit'  =>$brahman_initiation_date->toString('yyyyMMddHHmmss'),
-                    'ini_guru_id'     =>$dev_data['sanyas_spiritual_master'],
-                    'chk_date_sanyas' =>$dev_data['sanyas_initiation_day'],
-                    'do_sanyasinit'   =>$sanyas_initiation_date->toString('yyyyMMddHHmmss'),
-                    'sanyas_name'     =>$dev_data['sanyas_name'],
-                    'sanyas_title'    =>$dev_data['sanyas_title'],
-                    'sanyas_guru_id'  =>$dev_data['sanyas_spiritual_master'],
-             'spiritualname_sanyas_id'=>$dev_data['sanyas_name'],
-                    'remarks'         =>$dev_data['remarks'],
-                    //'do_deceased'   =>$dev_data[$key].'-'.$dev_data[$key].'-'.$dev_data[$key],
-                    'user_id'         =>$user['id'],
-                    //'iys'             =>$this->getRequest()->getPost(''),
-                    //'cong'            =>$this->getRequest()->getPost(''),
-                    //'spiritualname_id'=>$this->getRequest()->getPost(''),
-                    
-                    //'gurukulname'     =>$this->getRequest()->getPost(''),
-                    //'isspousespdisp'  =>$this->getRequest()->getPost(''),
-                    'isactive'        =>$user['is_active'],
+$devotee_data = array( 'pics'            =>$dev_photo_name, //this will give you the file name now you have to rename it then it will be inserted into the database
+                       'first_name'      =>$dev_data['first_name'],
+                       'middle_name'     =>$dev_data['middle_name'],
+                       'last_name'       =>$dev_data['last_name'],
+                       'do_birth'        =>$birthdate->toString('yyyyMMddHHmmss'),
+                       'gender'          =>$dev_data['gender'],
+                       'country_id'      =>$dev_data['cc'],
+                       'center_id'       =>$dev_data['center'],
+                       'counselor_id'    =>$dev_data['counselor'],
+                       'mobile'          =>$dev_data['mobile'],
+                       'email'           =>$dev_data['email'],
+                       'pres_phone'      =>$dev_data['phone_number'],
+                       'devotee_status'  =>$dev_data['active_status'],
+                       'asram_status_id' =>$dev_data['marital_status'],
+                       'mother_tongue_id'=>$dev_data['mother_tongue'],
+                       'counselee_status'=>$dev_data['counselee_status'],
+                       'blood_group'     =>$dev_data['bld_grp'],
+                       'religion_id'     =>$dev_data['previous_religion'],
+                       'native_place'    =>$dev_data['native_place'],
+                       'native_state_id' =>$dev_data['native_state'],
+                       'pres_add1'       =>$dev_data['present_addline1'],
+                       'pres_add2'       =>$dev_data['present_addline2'],
+                       'pres_locality_id'=>$dev_data['present_locality'],
+                       'pres_pin'        =>$dev_data['present_zip_code'],
+                       'pres_city_id'    =>$dev_data['present_city'],
+                       'pres_state_id'   =>$dev_data['present_state'],
+                       'pres_country_id' =>$dev_data['present_country'],
+                       //'pres_perm'       =>$this->getRequest()->getPost(''),
+                       'perm_add1'       =>$dev_data['permenant_addline1'],
+                       'perm_add2'       =>$dev_data['permenant_addline2'],
+                       'perm_locality_id'=>$dev_data['permenant_locality'],
+                       'perm_pin'        =>$dev_data['permenant_zip_code'],
+                       'perm_city_id'    =>$dev_data['permenant_city'],
+                       'perm_state_id'   =>$dev_data['permenant_state'],
+                       'perm_country_id' =>$dev_data['permenant_country'],
+                       'perm_phone'      =>$dev_data['phone_number'],
+                       'father_name'     =>$dev_data['father_name'],
+                       //'father_did'    =>$this->getRequest()->getPost(''),
+                       'mother_name'     =>$dev_data['mother_name'],
+                       //'mother_did'    =>$this->getRequest()->getPost(''),
+                       //'spouse_name'   =>$this->getRequest()->getPost(''),
+                       //'spouse_did'    =>$this->getRequest()->getPost(''),
+                       //'do_marriage'   =>$dev_data[$key].'-'.$dev_data[$key].'-'.$dev_data[$key];
+                       'isgurukuli'      =>$dev_data['gurukuli'],
+                       'edu_cat_id'      =>$dev_data['highest_education'],
+             'education_qualification'   =>$dev_data['education_description'],
+                       'occupation_id'   =>$dev_data['occupation'],
+                       'designation'     =>$dev_data['designation'],
+                       'merits'          =>$dev_data['merits_awards'],
+                       'skill_set'       =>$dev_data['skill_sets'],
+                       'off_name'        =>$dev_data['office_name'],
+                       'off_add1'        =>$dev_data['office_address_line1'],
+                       'off_add2'        =>$dev_data['office_address_line2'],
+                       'off_locality_id' =>$dev_data['office_locality'],
+                       'off_city_id'     =>$dev_data['office_city'],
+                       'off_state_id'    =>$dev_data['office_state'],
+                       'off_country_id'  =>$dev_data['office_country'],
+                       'off_pin'         =>$dev_data['office_zip_code'],
+                       'off_phone'       =>$dev_data['office_phone'],
+                       'chanting_started'=>$bgn_chan_from_date->toString('yyyyMMddHHmmss'),
+                        'chk_chant_start'=>$dev_data['bgn_chan_from_na'],
+                           'no_of_rounds'=>$dev_data['no_rou_pres_chanting'],
+                    'chanting_16_started'=>$chan_16_rounds_date->toString('yyyyMMddHHmmss'),
+                         //'chk_chant_16'=>$dev_data[],
+                       'intro_by'        =>$dev_data['intro_by'],
+                       'intro_year'      =>$dev_data['year_introduction'],
+                       'intro_center'    =>$dev_data['intro_center'],
+                       'chk_date_harinam'=>$dev_data['harinam_initiatn_na'],
+                       'do_harinaminit'  =>$harinam_initiatn_date->toString('yyyyMMddHHmmss'),
+                       'chk_date_brahmin'=>$dev_data['brahman_initiated_na'],
+                       'do_brahmininit'  =>$brahman_initiation_date->toString('yyyyMMddHHmmss'),
+                       'ini_guru_id'     =>$dev_data['sanyas_spiritual_master'],
+                       'chk_date_sanyas' =>$dev_data['sanyas_initiation_day'],
+                       'do_sanyasinit'   =>$sanyas_initiation_date->toString('yyyyMMddHHmmss'),
+                       'sanyas_name'     =>$dev_data['sanyas_name'],
+                       'sanyas_title'    =>$dev_data['sanyas_title'],
+                       'sanyas_guru_id'  =>$dev_data['sanyas_spiritual_master'],
+                'spiritualname_sanyas_id'=>$dev_data['sanyas_name'],
+                       'remarks'         =>$dev_data['remarks'],
+                       //'do_deceased'   =>$dev_data[$key].'-'.$dev_data[$key].'-'.$dev_data[$key],
+                       'user_id'         =>$user['id'],
+                     //'iys'             =>$this->getRequest()->getPost(''),
+                     //'cong'            =>$this->getRequest()->getPost(''),
+                     //'spiritualname_id'=>$this->getRequest()->getPost(''),
+                     
+                     //'gurukulname'     =>$this->getRequest()->getPost(''),
+                     //'isspousespdisp'  =>$this->getRequest()->getPost(''),
+                       'isactive'        =>$user['is_active'],
                     //'local_version_status' =>$this->getRequest()->getPost(''),
                     //'local_version_do_modify'   =>$this->getRequest()->getPost(''),
                     //'modified'        =>$this->getRequest()->getPost(''),
                     //'pan'             =>$this->getRequest()->getPost(''),
                     //'receipt_name'    =>$this->getRequest()->getPost(''),
-                    'entered_date'    =>Zend_Date::now()->toString('yyyyMMddHHmmss'),
-                 'dolm'               =>$user['dolm'],
-                  'modibyuid'         =>$user['modi_by_uid'],
-                    'entered_by_uid'  =>$user['entered_by_uid'],
-                    //'verified'          =>$this->getRequest()->getPost(''),
-                    'do_verify'       =>Zend_Date::now()->toString('yyyyMMddHHmmss'),
-                    //'verified_by_uid'   =>$this->getRequest()->getPost('')
+                      'entered_date'    =>Zend_Date::now()->toString('yyyyMMddHHmmss'),
+                   'dolm'               =>$user['dolm'],
+                    'modibyuid'         =>$user['modi_by_uid'],
+                      'entered_by_uid'  =>$user['entered_by_uid'],
+                  //'verified'          =>$this->getRequest()->getPost(''),
+                      'do_verify'       =>Zend_Date::now()->toString('yyyyMMddHHmmss'),
+                  //'verified_by_uid'   =>$this->getRequest()->getPost('')
 );
         $did = $d->insert($devotee_data);
         $this->view->lastrecordinserted = $did; 
@@ -500,6 +499,25 @@ $devotee_data = array(
         
     }
             
+        public function getlastdid(){
+            $bootstrap = $this->getInvokeArg('bootstrap');
+            $resource = $bootstrap->getPluginResource('multidb');
+            $db1 = $resource->getDb('db1');
+            $db3 = $resource->getDb('db3');
+            $select = $db3->select()
+                          ->from(array('t' => 'TABLES'), array('t.AUTO_INCREMENT'))
+                          ->where('TABLE_NAME = ?','devotee')
+                          ->where('TABLE_SCHEMA = ?', 'devotees_3_0');
+            $stmt = $db3->query($select);
+            $result = $stmt->fetchAll();
+            
+            foreach($result as $key => $value){
+                    foreach($value as $data1 => $data2){
+                    }            
+            }
+            $this->view->lastdid = $data2;    
+        }    
+        
             
     
 /*
